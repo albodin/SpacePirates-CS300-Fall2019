@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Risque&display=swap');
+
+.title {
+    font-family: Risque;
+    font-size: 48px;
+    text-align: center;
+}
+
+canvas {
+    background: black;
+}
+
+.celestial-map-panel {
+    padding: 20px;
+    border: 4px;
+    background: grey;
+    border: outset;
+}
+
+#celestial-map-container {
+    border: inset;
+    padding: 0;
+    margin: 0;
+}

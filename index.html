@@ -1,6 +1,7 @@
 <html>
 
 <head>
+<meta charset="UTF-8">
 <! --
 //
 // *** 
@@ -38,12 +39,13 @@
 
 <!--Global variables-->
 <script src="globals.js"></script>
+<link rel="stylesheet" href="styles.css">
 
 
 </head>
 
 <body>
-<h1>SpaceHunt</h1>
+<h1 class="title">SpaceHunt</h1>
 <form name=UI>
 STATUS
 <p>Current Location: 
@@ -64,6 +66,14 @@ MAKE A MOVE
 
 </form>
 
+<div class="celestial-map-panel">
+    <div id="celestial-map-container">
+        <canvas id="celestial-map" width="504" height="504"></canvas>
+    </div>
+</div>
+<p id="celestial-map-info"></p>
+
+<script src="CelestialMap.js"></script>
 </body>
 
 </html>
