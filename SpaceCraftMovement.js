@@ -6,6 +6,7 @@ function moveSpacecraft(angle, distance) {
    currentPosition()
    //checkEnergy();
    // checkSupplies();
+   updateCelestialMap()
 }
 
 // function checkBoundry(distance) { }

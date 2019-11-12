@@ -4,7 +4,7 @@ const INFO = document.querySelector('#celestial-map-INFO')
 
 // initial zoom
 const ZOOM_DEFAULT = 50.0
-// Minimum zoom, +3 accounts for border
+// Minimum zoom, +3 accounts for border around map and feels a little nicer
 let ZOOM_MIN = Math.max(
     CANVAS.width / (map.bounds.x + 3),
     CANVAS.height / (map.bounds.y + 3),
@@ -98,6 +98,8 @@ CANVAS.onmousedown = (e) => {
     // Track position
     let last_position = { x: e.pageX, y: e.pageY }
     let onMouseMove = (e) => {
+        // Ignore default event behavior
+        e.preventDefault()
         // Get delta position
         let delta = {
             x: last_position.x - e.pageX,
@@ -107,6 +109,7 @@ CANVAS.onmousedown = (e) => {
         camera.position.y += delta.y / camera.zoom
         camera.clamp()
         last_position = {x: e.pageX, y: e.pageY}
+        updateCelestialMap()
     }
     let onMouseUp = (_e) => {
         // Destroy this function, ending drag behavior
@@ -117,18 +120,19 @@ CANVAS.onmousedown = (e) => {
     }
     document.addEventListener('mousemove', onMouseMove)
     document.addEventListener('mouseup', onMouseUp)
-    // Ignore default event behavior
-    return false
+    updateCelestialMap()
 }
 
 let mouse = {position: {x: 0, y: 0}}
 CANVAS.addEventListener('mousemove', (e) => {
+    // Ignore default event behavior
+    e.preventDefault()
     let canvasRect = CANVAS.getBoundingClientRect()
     mouse.position = camera_to_world({
         x: e.pageX - canvasRect.left,
         y: e.pageY - canvasRect.top,
     })
-    return false
+    updateCelestialMap()
 })
 
 // Implements scrolling behavior on Celestial Map
@@ -150,12 +154,13 @@ CANVAS.addEventListener('wheel', (e) => {
     camera.position.x += (zoomOffset.x * zoomDelta) / camera.zoom
     camera.position.y += (zoomOffset.y * zoomDelta) / camera.zoom
     camera.clamp()
+    updateCelestialMap()
 })
 
 let LINEWIDTH = 1
 let CLOSE_COLOR = '#828239'
 
-let onRedraw = () => {
+let updateCelestialMap = () => {
     let redraw = () => {
         let ctx = CANVAS.getContext('2d')
         let { width, height } = CANVAS
@@ -167,7 +172,7 @@ let onRedraw = () => {
         drawMap()
         drawPlayer()
         // writeInfo()
-        onRedraw()
+        // onRedraw()
 
         // Debug by printing to DOM in real time
         function writeInfo() {
@@ -241,8 +246,7 @@ let onRedraw = () => {
                     let size = 0.04
                     if (!withinCameraBounds(screenPos)) continue
                     // "checkerboard" larger and smaller stars
-                    if (x % 2 == 1 && y % 2 == 0 ||
-                        x % 2 == 0 && y % 2 == 1)
+                    if (x % 2 == 1 && y % 2 == 0 || x % 2 == 0 && y % 2 == 1)
                         size = 0.03
                     ctx.beginPath()
                     ctx.arc(screenPos.x, screenPos.y, size * camera.zoom, 0, 2 * Math.PI)
@@ -251,9 +255,8 @@ let onRedraw = () => {
             }
         }
     }
-    // TODO don't call itself, only call when needs to update
     requestAnimationFrame(redraw)
 }
 
 // call this on move event
-onRedraw()
+updateCelestialMap()
