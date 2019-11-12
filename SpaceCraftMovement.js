@@ -1,15 +1,16 @@
 
 function moveSpacecraft(angle, distance) {
-  var distance = document.getElementById("distance").value
-  // alert("Move Space Craft");
+   var distance = document.getElementById("distance").value
+   
    movement(angle, distance)
+   currentPosition()
    //checkEnergy();
-  // checkSupplies();
+   // checkSupplies();
 }
 
 // function checkBoundry(distance) { }
 
-let movement = (angle, distance) => {
+function movement(angle, distance) {
    /*
       use: moves the spaceshipt based on input index.html
       */
@@ -35,3 +36,10 @@ let movement = (angle, distance) => {
    console.log(player.position)
 
 };
+
+let currentPosition = () =>{
+   //update x 
+   document.getElementById("xVal").value = player.position.x
+   //update y 
+   document.getElementById("yVal").value = player.position.y
+}
