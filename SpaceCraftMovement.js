@@ -1,6 +1,6 @@
 
 function moveSpacecraft(angle, distance) {
-   var distance = document.getElementById("distance").value
+   var distance = parseInt(document.getElementById("distance").value)
    
    movement(angle, distance)
    currentPosition()

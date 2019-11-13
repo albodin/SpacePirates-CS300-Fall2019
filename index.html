@@ -60,20 +60,24 @@
         Distance <input type="text" id="distance" name="distance" size="4" />
       </p>
       <p>
-        <input type="button" value="Up" onclick="moveSpacecraft(0,distance)" />
         <input
           type="button"
-          value="Right"
-          onclick="moveSpacecraft(90,distance)"
-        />
-        <input
-          type="button"
-          value="Left"
+          value="Up"
           onclick="moveSpacecraft(180,distance)"
         />
         <input
           type="button"
           value="Down"
+          onclick="moveSpacecraft(90,distance)"
+        />
+        <input
+          type="button"
+          value="Right"
+          onclick="moveSpacecraft(0,distance)"
+        />
+        <input
+          type="button"
+          value="Left"
           onclick="moveSpacecraft(270,distance)"
         />
       </p>
