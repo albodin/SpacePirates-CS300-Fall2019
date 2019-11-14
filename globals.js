@@ -2,7 +2,6 @@
 
 var supplies = 0;
 var energy = 0;
-var shipLocation = {x: 0, y: 0};
 var isRegularPlay = true;
 var hasEnhancedSensors = false;
 var isWormholeActive = false; 
