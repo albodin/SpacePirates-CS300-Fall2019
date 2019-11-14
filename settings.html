@@ -26,7 +26,6 @@
       <p>Energy <input type="text"  id="energy" name="energy" size="4" /></p>
       <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" />%</p>
 	  <p>Credits <input type="text" id ="credits" name="credits" size="4" /></p>
-	  <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" /></p>
       <p>Play mode:
 	    <input type="radio" name="mode" value="regular"> Regular play &nbsp;
 	    <input type="radio" name="mode" value="test"> Never dies
@@ -53,6 +52,24 @@
       
     </form>
 
-    
+	<script>
+	function save() {
+	//document.getElementById("xVal").value = 12;
+	var requestURL = "settings.json";
+	var request = new XMLHttpRequest();
+	request.open("GET", requestURL);
+	request.responseType = "json";
+	request.send();
+	//var setting = JSON.parse(settingText);
+	request.onload = function() {
+		var setting = request.response;
+		setting["locationX"] = document.getElementById("xVal").value;
+		setting["locationY"] = document.getElementById("yVal").value;
+		setting["energy"] = document.getElementById("energy").value;
+		setting["supplies"] = document.getElementById("supplies").value;
+	}
+}
+	</script>
+	
   </body>
 </html>

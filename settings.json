@@ -1,13 +1,13 @@
 {
-  "userName" : "User1",
-  "locationX" : 12,
-  "locationY" : 12,
-  "energy" : 100,
-  "supplies" : 100,
-  "credits" : "",
-  "isWormholeActive" : "false",
-  "isRegularPlay" : "true",
-  "hasEnhancedSensors" : "false",
-  "mapSizeX" : 25,
-  "mapSizeY" : 25
+  "userName": "User1",
+  "locationX": 12,
+  "locationY": 12,
+  "energy": 100,
+  "supplies": 100,
+  "credits": "",
+  "isWormholeActive": "false",
+  "isRegularPlay": "true",
+  "hasEnhancedSensors": "false",
+  "mapSizeX": 25,
+  "mapSizeY": 25
 }

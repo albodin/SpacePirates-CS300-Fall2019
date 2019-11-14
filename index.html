@@ -49,11 +49,13 @@
 <!--Global variables-->
     <script src="globals.js"></script>
 
+<!--Settings-->
+    <script src="settings.js"></script>
 
     <link rel="stylesheet" href="styles.css" />
   </head>
 
-  <body>
+  <body onload="readSettings()">
 	<ul>
 	  <li><a class="active" href="#home">Home</a></li>
 	  <li><a href="settings.html">Settings</a></li>
@@ -81,23 +83,15 @@
         <input
           type="button"
           value="Up"
-          onclick="moveSpacecraft(180,distance)"
+          onclick="moveSpacecraft(3,distance)"
         />
-        <input
-          type="button"
-          value="Up"
-          onclick="moveSpacecraft(90,distance)"
-        />
+        <input type="button" value="Down" onclick="moveSpacecraft(1,distance)" />
         <input
           type="button"
           value="Left"
-          onclick="moveSpacecraft(0,distance)"
+          onclick="moveSpacecraft(4,distance)"
         />
-        <input
-          type="button"
-          value="Right"
-          onclick="moveSpacecraft(270,distance)"
-        />
+        <input type="button" value="Right" onclick="moveSpacecraft(2,distance)" />
         <input
         type="button"
         value="Fire Sensors"
