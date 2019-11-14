@@ -4,6 +4,13 @@ var supplies = 0;
 var energy = 0;
 var shipLocation = {x: 0, y: 0};
 var isRegularPlay = 0;
+
+//start variables, what the game resets too upon losing
+var startEnergy = 100;
+var startSupplies = 100;
+var startx = 12;
+var starty = 12;
+
 var map = {
     bounds: {
         x: 126,
