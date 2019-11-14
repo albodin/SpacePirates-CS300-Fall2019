@@ -3,7 +3,9 @@
 var supplies = 0;
 var energy = 0;
 var shipLocation = {x: 0, y: 0};
-var isRegularPlay = 0;
+var isRegularPlay = false;
+var hasEnhancedSensors = false;
+var isWormholeActive = false; 
 
 //start variables, what the game resets too upon losing
 var startEnergy = 100;
@@ -25,4 +27,4 @@ let player = {
 // Initializes the entire map grid's visibility information to false.
 // should this go somewhere else?
 // TODO initialize to false instead of true once visibility actually works
-let visible = Array(map.bounds.x).fill().map(() => Array(map.bounds.y).fill(true))
+let visible = Array(map.bounds.x).fill().map(() => Array(map.bounds.y).fill(false))
