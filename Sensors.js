@@ -18,7 +18,7 @@ function fireSensors() {
     updateCelestialMap();
 
     //Decrease supplies by 2% and check them
-    supplies -= 2;
+    decrementSupplies(2);
     checkSupplies();
 }
 

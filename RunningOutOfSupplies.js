@@ -6,6 +6,10 @@ function checkSupplies() {
       }
       else
          alert("You ran out of supplies");
-   }
-      
+   }    
+}
+
+function decrementSupplies(amount) {
+   supplies -= amount;
+   document.getElementById("supplies").value = supplies;
 }
