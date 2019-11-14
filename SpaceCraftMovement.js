@@ -18,30 +18,32 @@ function movement(angle, distance) {
       */
    console.log(distance)
    distance = distance ? distance : 1;
-   //  Up
-   if (angle === 0) {
-      player.position.x += distance;
-   }
-   // Right
-   else if (angle === 90) {
-      player.position.y += distance;
-   }
-   // Left
-   else if (angle === 180) {
-      player.position.y -= distance;
-   }
-   // Down
-   else if (angle === 270) {
-      player.position.x -= distance;
-   }
+   for(var i = 0; i<distance; ++i) {
+       //  Up
+       if (angle === 0) {
+           player.position.x++;
+       }
+       // Right
+       else if (angle === 90) {
+           player.position.y++;
+       }
+       // Left
+       else if (angle === 180) {
+           player.position.y--;
+       }
+       // Down
+       else if (angle === 270) {
+           player.position.x--;
+       }
 
-   //update the Energy after a player makes a move
-   updateEnergy()
+       //update the Energy after a player makes a move
+        decrementEnergy();
 
-   //Set the points to visible with a radius of 1 around the player
-   setVisible(1);
-   console.log(energy)
-   console.log(player.position)
+       //Set the points to visible with a radius of 1 around the player
+       setVisible(1);
+       console.log(energy)
+       console.log(player.position)
+   }
 
 };
 
