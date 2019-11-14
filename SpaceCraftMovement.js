@@ -71,7 +71,7 @@ function movement(angle, distance) {
 
 
         //update the Energy after a player makes a move
-        decrementEnergy();
+        decrementEnergy(energyCost);
 
         //Set the points to visible with a radius of 1 around the player
         setVisible(1);
