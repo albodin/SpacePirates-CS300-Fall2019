@@ -17,20 +17,10 @@ function checkEnergy() {
    console.log(isRegularPlay)
 }
 
-//updates the energy value after a
-function  updateEnergy(){
+//Reduces energy by 1
+function  decrementEnergy(){
 
-   var newEnergy = parseInt(document.getElementById("energy").value);
-   var distMoved = parseInt(document.getElementById("distance").value);
-
-   //if we get a negative or 0 value, assume 1
-   if(distMoved <= 0){
-      distMoved =1
-   }
-   //else
-   //otherwise the distance will remain the same as the input value
-
-   newEnergy -= distMoved;
-   energy = newEnergy;
+   energy = parseInt(document.getElementById("energy").value);
+   energy--;
    document.getElementById("energy").value = energy;
 }
