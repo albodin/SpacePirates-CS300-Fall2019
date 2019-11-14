@@ -35,8 +35,20 @@
 
     <script src="SpaceCraftMovement.js"></script>
 
-    <!--Global variables-->
+
+    <!--
+// *** User Story: SH-6 Sensors Priority: HIGH
+// *** Story: As a player, I want to be see what
+// *** is located at nearby Celestial Points, so
+// *** I Know where things are.
+-->
+<script src="Sensors.js"></script>
+
+
+<!--Global variables-->
     <script src="globals.js"></script>
+
+
     <link rel="stylesheet" href="styles.css" />
   </head>
 
@@ -79,6 +91,11 @@
           type="button"
           value="Left"
           onclick="moveSpacecraft(270,distance)"
+        />
+        <input
+        type="button"
+        value="Fire Sensors"
+        onclick="fireSensors()"
         />
       </p>
     </form>
