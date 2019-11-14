@@ -1,12 +1,13 @@
 
 function moveSpacecraft(angle, distance) {
    var distance = parseInt(document.getElementById("distance").value)
-   
+
    movement(angle, distance)
    currentPosition()
-   //checkEnergy();
+   checkEnergy();
    // checkSupplies();
    updateCelestialMap()
+
 }
 
 // function checkBoundry(distance) { }
@@ -34,6 +35,9 @@ function movement(angle, distance) {
       player.position.x -= distance;
    }
 
+   //update the Energy after a player makes a move
+   updateEnergy()
+   console.log(energy)
    console.log(player.position)
 
 };
