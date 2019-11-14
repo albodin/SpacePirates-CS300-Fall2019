@@ -26,7 +26,7 @@ function movement(angle, distance) {
        }
        //  Up
        if (angle === 0) {
-           player.position.x++;
+           player.position.x--;
        }
        // Right
        else if (angle === 90) {
@@ -38,7 +38,7 @@ function movement(angle, distance) {
        }
        // Down
        else if (angle === 270) {
-           player.position.x--;
+           player.position.x++;
        }
 
        //update the Energy after a player makes a move
@@ -57,4 +57,9 @@ let currentPosition = () =>{
    document.getElementById("xVal").value = player.position.x
    //update y 
    document.getElementById("yVal").value = player.position.y
+}
+
+function modifyMapPositionFromInput(){
+    player.position.x = parseInt(document.getElementById("xVal").value)
+    player.position.y = parseInt(document.getElementById("yVal").value)
 }
