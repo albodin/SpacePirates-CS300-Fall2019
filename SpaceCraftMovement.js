@@ -5,7 +5,7 @@ function moveSpacecraft(angle, distance) {
    movement(angle, distance)
    currentPosition()
    checkEnergy();
-   // checkSupplies();
+   checkSupplies();
    updateCelestialMap()
 
 }
@@ -37,6 +37,9 @@ function movement(angle, distance) {
 
    //update the Energy after a player makes a move
    updateEnergy()
+
+   //Set the points to visible with a radius of 1 around the player
+   setVisible(1);
    console.log(energy)
    console.log(player.position)
 
