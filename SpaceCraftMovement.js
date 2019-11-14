@@ -10,7 +10,9 @@ function moveSpacecraft(angle, distance) {
 
 }
 
-// function checkBoundry(distance) { }
+// function checkBoundry(distance) {
+
+//  }
 
 function movement(angle, distance) {
    /*
@@ -19,6 +21,9 @@ function movement(angle, distance) {
    console.log(distance)
    distance = distance ? distance : 1;
    for(var i = 0; i<distance; ++i) {
+       if(player.position.x > map.bounds.x || player.position.x < 0 || player.position.y > map.bounds.y || player.position.y < 0){
+           console.log("here")
+       }
        //  Up
        if (angle === 0) {
            player.position.x++;
