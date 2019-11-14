@@ -1,6 +1,5 @@
 
 function checkEnergy() {
-   alert ("Checking Energy");
    if(energy <=0)
    {
       //TODO Make sure that is Regular play works correctly

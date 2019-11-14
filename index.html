@@ -66,12 +66,12 @@
       STATUS
       <p>
         Current Location: X
-        <input type="text" id="xVal" name="xValue" size="4" /> Y
-        <input type="text" id="yVal" name="yValue" size="4" />
+        <input type="text" id="xVal" name="xValue" size="4" onchange="modifyMapPositionFromInput()"/> Y
+        <input type="text" id="yVal" name="yValue" size="4" onchange="modifyMapPositionFromInput()"/>
       </p>
 
       <p></p>
-      <p>Energy <input type="text"  id="energy" name="energy" size="4" /></p>
+      <p>Energy <input type="text"  id="energy" name="energy" size="4"/></p>
       <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" />%</p>
       <p></p>
       <hr />
@@ -87,17 +87,17 @@
         />
         <input
           type="button"
-          value="Down"
+          value="Up"
           onclick="moveSpacecraft(90,distance)"
         />
         <input
           type="button"
-          value="Right"
+          value="Left"
           onclick="moveSpacecraft(0,distance)"
         />
         <input
           type="button"
-          value="Left"
+          value="Right"
           onclick="moveSpacecraft(270,distance)"
         />
         <input
