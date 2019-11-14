@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+
+<!--Global variables-->
+    <script src="globals.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+	<ul>
+	  <li><a class="active" href="index.html">Back</a></li>
+	  <li><a href="#about">About</a></li>
+	</ul>
+    <h1 class="title">SpaceHunt</h1>
+	<br>
+	<br>
+	<h2>Configurations:</h2>
+    <form name="UI">
+      <p>
+        Start Location: X
+        <input type="text" id="xVal" name="xValue" size="4" /> Y
+        <input type="text" id="yVal" name="yValue" size="4" />
+      </p>
+      <p>Energy <input type="text"  id="energy" name="energy" size="4" /></p>
+      <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" />%</p>
+	  <p>Credits <input type="text" id ="credits" name="credits" size="4" /></p>
+	  <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" /></p>
+      <p>Play mode:
+	    <input type="radio" name="mode" value="regular"> Regular play &nbsp;
+	    <input type="radio" name="mode" value="test"> Never dies
+	  </p>
+	  <p>Wormhole behavior:
+	    <input type="radio" name="wormhole" value="fixed"> Fixed &nbsp;
+	    <input type="radio" name="wormhole" value="random"> Random
+	  </p>
+	  <p>
+        Game size: Width
+        <input type="text" id="xVal" name="xValue" size="4" /> Height
+        <input type="text" id="yVal" name="yValue" size="4" />
+      </p>
+	  <input
+          type="button"
+          value="Cancel"
+          onclick="reset()"
+      />
+	  <input
+          type="button"
+          value="Save"
+          onclick="save()"
+      />
+      
+    </form>
+
+    
+  </body>
+</html>
