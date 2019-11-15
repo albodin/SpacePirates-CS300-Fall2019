@@ -6,7 +6,7 @@ function moveSpacecraft(angle, distance) {
     currentPosition()
     checkEnergy();
     checkSupplies();
-    updateCelestialMap()
+    celestialMap.onPlayerMovement(player)
 
 }
 
