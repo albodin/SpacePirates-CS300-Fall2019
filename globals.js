@@ -11,6 +11,7 @@ var startEnergy = 100;
 var startSupplies = 100;
 var startx = 12;
 var starty = 12;
+var energyCost = 10;//how much an energy one movement costs
 
 var map = {
     bounds: {

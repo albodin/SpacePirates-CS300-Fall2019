@@ -9,4 +9,5 @@ function restart() {
     document.getElementById("xVal").value = startx;
     player.position.y = startx;
     document.getElementById("yVal").value = starty;
+    energyCost = 10;
 }
