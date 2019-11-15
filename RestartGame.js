@@ -10,4 +10,10 @@ function restart() {
     player.position.y = startx;
     document.getElementById("yVal").value = starty;
     energyCost = 10;
+    //reset visibility
+    for(i= 0; i < map.bounds.x; ++i){
+        for(j = 0; j < map.bounds.x; ++j){
+            visible[i][j] = false;
+        }
+    }
 }
