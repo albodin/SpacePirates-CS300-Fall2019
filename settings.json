@@ -2,7 +2,7 @@
   "userName": "User1",
   "locationX": 12,
   "locationY": 12,
-  "energy": 100,
+  "energy": 1000,
   "supplies": 100,
   "credits": "",
   "isWormholeActive": "false",
