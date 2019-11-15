@@ -14,12 +14,6 @@ const ZOOM_MAX = 100.0
 const CAMERA_MIN = { x: -2, y: -2 }
 const CAMERA_MAX = { x: map.bounds.x - 1, y: map.bounds.y - 1 }
 
-// TODO: testing visibility
-visible[14][13] = false
-visible[13][13] = false
-visible[11][15] = false
-
-
 // Small utility functions
 let util = {
     // Bounds a number between minimum and maximum value
@@ -59,7 +53,6 @@ let camera = {
 // Resizes the canvas and sets anything that needs to be updated to reflect
 // the new canvas size.
 function onResize() {
-    console.log('here')
     let parent = document.querySelector('#celestial-map-container')
     CANVAS.width = parent.clientWidth
     CANVAS.height = parent.clientHeight
@@ -159,6 +152,23 @@ CANVAS.addEventListener('wheel', (e) => {
 
 let LINEWIDTH = 1
 let CLOSE_COLOR = '#828239'
+
+let centerCelestialMap = ({x, y}) => {
+    playerPos = world_to_camera({x, y})
+    pos = {
+        x: playerPos.x - (camera.bounds.x / 2),
+        y: playerPos.y - (camera.bounds.y / 2)
+    }
+    camera.position = camera_to_world(pos)
+    camera.clamp()
+    updateCelestialMap()
+}
+
+let celestialMap = {
+    onPlayerMovement: (player) => {
+        centerCelestialMap(player.position)
+    }
+}
 
 let updateCelestialMap = () => {
     let redraw = () => {

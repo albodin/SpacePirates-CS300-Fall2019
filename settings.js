@@ -1,5 +1,4 @@
 function readSettings() {
-	document.getElementById("xVal").value = 12;
 	var requestURL = "settings.json";
 	var request = new XMLHttpRequest();
 	request.open("GET", requestURL);
@@ -9,8 +8,8 @@ function readSettings() {
 	request.onload = function() {
 		var setting = request.response;
 		document.getElementById("xVal").value = setting["locationX"];
-		document.getElementById("yVal").innerHTML = setting["locationY"];
+		document.getElementById("yVal").value = setting["locationY"];
 		document.getElementById("energy").value = setting["energy"];
-		document.getElementById("supplies").innerHTML = setting["supplies"];
+		document.getElementById("supplies").value = setting["supplies"];
 	}
 }
