@@ -14,6 +14,17 @@ const getRandomInt = (max, min) => {
     return random = Math.floor(Math.random() * max + min)
 }
 
+
+
+const checkWormHole = () => {
+    if (isWormholeActive) {
+        player.position.x = getRandomInt(map.bounds.x, 0)
+        player.position.x = getRandomInt(map.bounds.y, 0)
+    }else{
+        return false
+    }
+}
+
 const outOfBounds = (newPos) => {
     if (newPos > map.bounds.x || player.position.x < 0 || player.position.y > map.bounds.y || player.position.y < 0) {
         //if wormhole is active, redirect player to random position
@@ -48,36 +59,60 @@ function movement(angle, distance) {
     /*
        use: moves the spaceshipt based on input index.html
        */
-    console.log(distance)
+    //console.log(distance)
     distance = distance ? distance : 1;
     for (var i = 0; i < distance; ++i) {
-        //  Up
+        //  Down
         if (angle === 1) {
-            if(player.position.y + i > map.bounds.y){
+            if (player.position.y + 1 > map.bounds.y) {
+                if (isWormholeActive) {
+                    player.position.x = getRandomInt(map.bounds.x, 0)
+                    player.position.x = getRandomInt(map.bounds.y, 0)
+                } else {
                 player.position.y = 0
+                }
+            } else {
+                player.position.y++;
             }
-            player.position.y++;
         }
         // Right
         else if (angle === 2) {
-            if(player.position.x + i > map.bounds.x){
+            if (player.position.x + 1 > map.bounds.x) {
+                if (isWormholeActive) {
+                    player.position.x = getRandomInt(map.bounds.x, 0)
+                    player.position.x = getRandomInt(map.bounds.y, 0)
+                } else {
                 player.position.x = 0
+                }
+            } else {
+                player.position.x++;
             }
-            player.position.x++;
+        }
+        // Up
+        else if (angle === 3) {
+            if (player.position.y - 1 < 0) {
+                if (isWormholeActive) {
+                    player.position.x = getRandomInt(map.bounds.x, 0)
+                    player.position.x = getRandomInt(map.bounds.y, 0)
+                } else {
+                player.position.y = map.bounds.y
+                }
+            } else {
+                player.position.y--;
+            }
         }
         // Left
-        else if (angle === 3) {
-            if(player.position.y - i < 0){
-                player.position.y = map.bounds.y
-            }
-            player.position.y--;
-        }
-        // Down
         else if (angle === 4) {
-            if(player.position.x - i < 0){
-                player.position = map.bounds.x
+            if (player.position.x - 1 < 0) {
+                if (isWormholeActive) {
+                    player.position.x = getRandomInt(map.bounds.x, 0)
+                    player.position.x = getRandomInt(map.bounds.y, 0)
+                } else {
+                player.position.x = map.bounds.x
+                }
+            } else {
+                player.position.x--;
             }
-            player.position.x--;
         }
 
 
