@@ -1,0 +1,120 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <! --
+//
+// *** 
+// *** JavaScript functions loaded as include files
+// *** Allows each team member to own their own code
+// ***
+//
+-->
+
+    <!--
+// *** User Story: SH-3	Running out of energy	Priority: HIGH
+// *** Story: As a player, I want to be notified when I run out of
+// *** energy so I know I have lost the game
+-->
+
+    <script src="RunningOutOfEnergy.js"></script>
+    <script src="RestartGame.js"></script>
+
+    <!--
+// *** User Story: SH-4	Running out of supplies	Priority: HIGH
+// *** Story: As a player, I want to be notified when I run out of
+// *** supplies so I know I have lost the game
+-->
+
+    <script src="RunningOutOfSupplies.js"></script>
+
+    <!--
+// *** User Story: SH-1	Spacecraft Movement	Priority: HIGH
+// *** Story: As a player, I want to be able to move my spacecraft 
+// *** 0, 90, 180 or 270 degrees, and a specific distance from my 
+// *** current position so I can visit celestial points in the game space.
+-->
+
+    <script src="SpaceCraftMovement.js"></script>
+
+
+    <!--
+// *** User Story: SH-6 Sensors Priority: HIGH
+// *** Story: As a player, I want to be see what
+// *** is located at nearby Celestial Points, so
+// *** I Know where things are.
+-->
+<script src="Sensors.js"></script>
+
+
+<!--Global variables-->
+    <script src="globals.js"></script>
+
+<!--Settings-->
+    <script src="settings.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body onload="readSettings()">
+	<ul>
+	  <li><a class="active" href="#home">Home</a></li>
+	  <li><a href="settings.html">Settings</a></li>
+	  <li><a href="#about">About</a></li>
+	</ul>
+    <h1 class="title">SpaceHunt</h1>
+    <form name="UI">
+      STATUS
+      <p>
+        Current Location: X
+        <input type="text" id="xVal" name="xValue" size="4" /> Y
+        <input type="text" id="yVal" name="yValue" size="4" />
+      </p>
+
+      <p></p>
+      <p>Energy <input type="text"  id="energy" name="energy" size="4" /></p>
+      <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" />%</p>
+      <p></p>
+      <hr />
+      MAKE A MOVE
+      <p>
+        Distance <input type="text" id="distance" name="distance" size="4" />
+      </p>
+      <p>
+        <input
+          type="button"
+          value="Up"
+          onclick="moveSpacecraft(3,distance)"
+        />
+        <input
+          type="button"
+          value="Down"
+          onclick="moveSpacecraft(1,distance)"
+        />
+        <input
+          type="button"
+          value="Left"
+          onclick="moveSpacecraft(4,distance)"
+        />
+        <input 
+          type="button"
+          value="Right"
+          onclick="moveSpacecraft(2,distance)"
+          />
+        <input
+        type="button"
+        value="Fire Sensors"
+        onclick="fireSensors()"
+        />
+      </p>
+    </form>
+
+    <div class="celestial-map-panel">
+      <div id="celestial-map-container">
+        <canvas id="celestial-map" width="504" height="504"></canvas>
+      </div>
+    </div>
+    <p id="celestial-map-info"></p>
+
+    <script src="CelestialMap.js"></script>
+  </body>
+</html>
