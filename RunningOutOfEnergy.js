@@ -3,7 +3,7 @@ function checkEnergy() {
    if(energy <=0)
    {
       //TODO Make sure that is Regular play works correctly
-      if(isRegularPlay === 1)
+      if(isRegularPlay)
       {
          alert ("You are out of energy. Game over");
          restart();
@@ -17,9 +17,9 @@ function checkEnergy() {
 }
 
 //Reduces energy by 1
-function  decrementEnergy(){
+function  decrementEnergy(energyCost){
 
    energy = parseInt(document.getElementById("energy").value);
-   energy--;
+   energy -= energyCost;
    document.getElementById("energy").value = energy;
 }
