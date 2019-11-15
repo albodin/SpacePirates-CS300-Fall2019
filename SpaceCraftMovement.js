@@ -14,9 +14,8 @@ const getRandomInt = (max, min) => {
     return random = Math.floor(Math.random() * max + min)
 }
 
-const outOfBounds = (distance) => {
-    
-    if (player.position.x > map.bounds.x || player.position.x < 0 || player.position.y > map.bounds.y || player.position.y < 0) {
+const outOfBounds = (newPos) => {
+    if (newPos > map.bounds.x || player.position.x < 0 || player.position.y > map.bounds.y || player.position.y < 0) {
         //if wormhole is active, redirect player to random position
         if (isWormholeActive) {
             player.position.x = getRandomInt(map.bounds.x, 0)
@@ -52,21 +51,32 @@ function movement(angle, distance) {
     console.log(distance)
     distance = distance ? distance : 1;
     for (var i = 0; i < distance; ++i) {
-        outOfBounds()
         //  Up
         if (angle === 1) {
+            if(player.position.y + i > map.bounds.y){
+                player.position.y = 0
+            }
             player.position.y++;
         }
-        // Left
+        // Right
         else if (angle === 2) {
+            if(player.position.x + i > map.bounds.x){
+                player.position.x = 0
+            }
             player.position.x++;
         }
-        // Up
+        // Left
         else if (angle === 3) {
+            if(player.position.y - i < 0){
+                player.position.y = map.bounds.y
+            }
             player.position.y--;
         }
         // Down
         else if (angle === 4) {
+            if(player.position.x - i < 0){
+                player.position = map.bounds.x
+            }
             player.position.x--;
         }
 
