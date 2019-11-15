@@ -7,7 +7,7 @@ var hasEnhancedSensors = false;
 var isWormholeActive = false; 
 
 //start variables, what the game resets too upon losing
-var startEnergy = 100;
+var startEnergy = 1000;
 var startSupplies = 100;
 var startx = 12;
 var starty = 12;
