@@ -47,6 +47,23 @@ let camera = {
         // Update position to remain within bounds.
         camera.position.x = util.bound(camera.position.x, min.x, max.x)
         camera.position.y = util.bound(camera.position.y, min.y, max.y)
+    },
+    transform: {
+        world_to_camera({x, y}) {
+            let { zoom, position } = camera;
+            return {
+                x: (x - position.x) * zoom,
+                y: (y - position.y) * zoom,
+            }
+        },
+        camera_to_world({x, y}) {
+            let { zoom, position } = camera;
+            return {
+                x: (x / zoom) + position.x,
+                y: (y / zoom) + position.y
+            }
+
+        }
     }
 }
 
@@ -65,26 +82,8 @@ function onResize() {
         y: CANVAS.height,
     }
 }
-onResize()
 window.addEventListener('resize', onResize)
-
-// Transforms a world position into a camera position
-function world_to_camera({x, y}) {
-    x -= camera.position.x
-    y -= camera.position.y
-    x *= camera.zoom
-    y *= camera.zoom
-    return {x, y}
-}
-
-// Transforms a camera position into a world position
-function camera_to_world({x, y}) {
-    x /= camera.zoom
-    y /= camera.zoom
-    x += camera.position.x
-    y += camera.position.y
-    return {x, y}
-}
+onResize()
 
 // Allows for dragging for map movement
 CANVAS.onmousedown = (e) => {
@@ -121,7 +120,7 @@ CANVAS.addEventListener('mousemove', (e) => {
     // Ignore default event behavior
     e.preventDefault()
     let canvasRect = CANVAS.getBoundingClientRect()
-    mouse.position = camera_to_world({
+    mouse.position = camera.transform.camera_to_world({
         x: e.pageX - canvasRect.left,
         y: e.pageY - canvasRect.top,
     })
@@ -154,12 +153,13 @@ let LINEWIDTH = 1
 let CLOSE_COLOR = '#828239'
 
 let centerCelestialMap = ({x, y}) => {
-    playerPos = world_to_camera({x, y})
+    // playerPos = world_to_camera({x, y})
+    playerPos = camera.transform.world_to_camera({x, y})
     pos = {
         x: playerPos.x - (camera.bounds.x / 2),
         y: playerPos.y - (camera.bounds.y / 2)
     }
-    camera.position = camera_to_world(pos)
+    camera.position = camera.transform.camera_to_world(pos)
     camera.clamp()
     updateCelestialMap()
 }
@@ -194,8 +194,8 @@ let updateCelestialMap = () => {
         function drawBorders() {
             // Draw borders
             ctx.strokeStyle = '#aaa'
-            let ul_corner = world_to_camera({x: -1, y: -1})
-            let br_corner = world_to_camera({x: map.bounds.x, y: map.bounds.y})
+            let ul_corner = camera.transform.world_to_camera({x: -1, y: -1})
+            let br_corner = camera.transform.world_to_camera({x: map.bounds.x, y: map.bounds.y})
             ctx.beginPath()
             ctx.moveTo(ul_corner.x, ul_corner.y)
             ctx.lineTo(br_corner.x, ul_corner.y)
@@ -213,7 +213,7 @@ let updateCelestialMap = () => {
 
         // Draws the player ship
         function drawPlayer() {
-            let { x, y } = world_to_camera(player.position)
+            let { x, y } = camera.transform.world_to_camera(player.position)
             let cockpitSize = 0.3
             let shipSize = 0.6
 
@@ -252,7 +252,7 @@ let updateCelestialMap = () => {
                 for (let y = 0; y < map.bounds.y; y += 1) {
                     if (!visible[x][y])
                         continue;
-                    let screenPos = world_to_camera({x, y})
+                    let screenPos = camera.transform.world_to_camera({x, y})
                     let size = 0.04
                     if (!withinCameraBounds(screenPos)) continue
                     // "checkerboard" larger and smaller stars
