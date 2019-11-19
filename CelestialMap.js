@@ -17,52 +17,34 @@ const CAMERA_MAX = { x: map.bounds.x - 1, y: map.bounds.y - 1 }
 // Small utility functions
 let util = {
     // Bounds a number between minimum and maximum value
-    bound: (num, min, max) => {
-        return num < min ?
-            min : num > max ?
-            max : num
-    }
-}
-
-
-// Camera object represents where our view is in the world
-let camera = {
-    zoom: ZOOM_DEFAULT,
-    position: {
-        x: 7,
-        y: 7,
-    },
-    bounds: {
-        x: CANVAS.width,
-        y: CANVAS.height,
-    },
-    // Clamps camera within it's bounds.
-    clamp: () => {
-        min = CAMERA_MIN
-        // Changes based on zoom level.
-        max = {
-            x: CAMERA_MAX.x - (camera.bounds.x / camera.zoom) + 2,
-            y: CAMERA_MAX.y - (camera.bounds.y / camera.zoom) + 2,
-        }
-        // Update position to remain within bounds.
-        camera.position.x = util.bound(camera.position.x, min.x, max.x)
-        camera.position.y = util.bound(camera.position.y, min.y, max.y)
-    },
-    transform: {
-        world_to_camera({x, y}) {
-            let { zoom, position } = camera;
-            return {
-                x: (x - position.x) * zoom,
-                y: (y - position.y) * zoom,
-            }
+    bound: (num, min, max) => { return num < min ?  min : num > max ?  max : num },
+    // Adds "vector2 math" for dealing with {x, y} objects as vectors
+    // Always return a new vector.
+    vector2math: {
+        mul(v1, v2) {
+            v1 = this.validate(v1); v2 = this.validate(v2)
+            return { x: v1.x * v2.x, y: v1.y * v2.y }
         },
-        camera_to_world({x, y}) {
-            let { zoom, position } = camera;
-            return {
-                x: (x / zoom) + position.x,
-                y: (y / zoom) + position.y
-            }
-
+        div(v1, v2) {
+            v1 = this.validate(v1); v2 = this.validate(v2)
+            return { x: v1.x / v2.x, y: v1.y / v2.y }
+        },
+        add(v1, v2) {
+            v1 = this.validate(v1); v2 = this.validate(v2)
+            return { x: v1.x + v2.x, y: v1.y + v2.y }
+        },
+        sub(v1, v2) {
+            v1 = this.validate(v1); v2 = this.validate(v2)
+            return { x: v1.x - v2.x, y: v1.y - v2.y }
+        },
+        validate(v) {
+            if (typeof v === 'object' &&
+                v.hasOwnProperty('x') &&
+                v.hasOwnProperty('y'))
+                return v;
+            if (typeof v === 'number')
+                return {x: v, y: v};
+            throw new Error('v must be a number or an object {x, y}')
         }
     }
 }
@@ -85,188 +67,259 @@ function onResize() {
 window.addEventListener('resize', onResize)
 onResize()
 
-// Allows for dragging for map movement
-CANVAS.onmousedown = (e) => {
-    // Track position
-    let last_position = { x: e.pageX, y: e.pageY }
-    let onMouseMove = (e) => {
+
+// Camera object represents where our view is in the world
+let camera = {
+    zoom: ZOOM_DEFAULT,
+    zoomBy(delta) {
+        // Update current zoom, keep old value
+        let oldZoom = camera.zoom
+        camera.zoom -= delta
+        camera.zoom = util.bound(camera.zoom, ZOOM_MIN, ZOOM_MAX)
+        // Update camera position to 'zoom in' on mouse position
+        // Get difference in zoom between this and last
+        let zoomDelta = camera.zoom - oldZoom
+        // Get difference between camera position and mouse position
+        let zoomOffset = {
+            x: mouse.position.x - camera.position.x,
+            y: mouse.position.y - camera.position.y,
+        }
+        // Do the math (honestly this was a bit of trial and error)
+        camera.position.x += (zoomOffset.x * zoomDelta) / camera.zoom
+        camera.position.y += (zoomOffset.y * zoomDelta) / camera.zoom
+        // Clamp view to boundaries
+        camera.clamp()
+        // Update mouse with new world position
+        mouse.updatePosition()
+        // Trigger repaint
+        celestialMap.update()
+    },
+    position: { x: 7, y: 7 },
+    bounds: {
+        x: CANVAS.width,
+        y: CANVAS.height,
+    },
+    // Clamps camera within it's bounds.
+    clamp: () => {
+        let v = util.vector2math
+        let min = CAMERA_MIN
+        // Changes based on zoom level.
+        let max = v.add(
+            v.sub(
+                CAMERA_MAX,
+                v.div(camera.bounds, camera.zoom)
+            ), 2)
+        // Update position to remain within bounds.
+        camera.position.x = util.bound(camera.position.x, min.x, max.x)
+        camera.position.y = util.bound(camera.position.y, min.y, max.y)
+    },
+    get_center() {
+        return camera.transform.camera_to_world(
+            util.vector2math.div(camera.bounds, 2))
+    },
+    centerOn({x, y}) {
+        playerPos = camera.transform.world_to_camera({x, y})
+        pos = {
+            x: playerPos.x - (camera.bounds.x / 2),
+            y: playerPos.y - (camera.bounds.y / 2)
+        }
+        camera.position = camera.transform.camera_to_world(pos)
+        camera.clamp()
+        celestialMap.update()
+    },
+    transform: {
+        world_to_camera({x, y}) {
+            let { zoom, position } = camera;
+            return {
+                x: (x - position.x) * zoom,
+                y: (y - position.y) * zoom,
+            }
+        },
+        camera_to_world({x, y}) {
+            let { zoom, position } = camera;
+            return {
+                x: (x / zoom) + position.x,
+                y: (y / zoom) + position.y
+            }
+        }
+    },
+    init() {
+        this.centerOn(player.position)
+    }
+}
+camera.init()
+
+let mouse = {
+    position: {x: 0, y: 0},
+    screenPosition: {x: 0, y: 0},
+    updatePosition() {
+        this.position = camera.transform
+            .camera_to_world(this.screenPosition)
+    },
+    // Updates this fake mouse object on real mouse movement
+    onMove(e) {
         // Ignore default event behavior
         e.preventDefault()
-        // Get delta position
-        let delta = {
-            x: last_position.x - e.pageX,
-            y: last_position.y - e.pageY,
+        // Get canvas location
+        let canvasRect = CANVAS.getBoundingClientRect()
+        // Get mouse location relative to canvas
+        this.screenPosition = {
+            x: e.pageX - canvasRect.left - window.scrollX,
+            y: e.pageY - canvasRect.top - window.scrollY,
         }
-        camera.position.x += delta.x / camera.zoom
-        camera.position.y += delta.y / camera.zoom
-        camera.clamp()
-        last_position = {x: e.pageX, y: e.pageY}
-        updateCelestialMap()
+        // Update world position
+        this.updatePosition()
+        // Trigger paint
+        celestialMap.update()
+    },
+    // Implements scrollwheel behavior on Celestial Map
+    onWheel(e) {
+        e.preventDefault()
+        camera.zoomBy(e.deltaY)
+    },
+    // Starts dragging. TODO click functionality?
+    onDown(e) {
+        let v = util.vector2math
+        // Track position
+        let lastPosition = { x: e.pageX, y: e.pageY }
+        let onDrag = (e) => {
+            // Ignore default event behavior
+            e.preventDefault()
+            // Get delta position (difference between this frame and last)
+            let currentPosition = {x: e.pageX, y: e.pageY}
+            let delta = v.sub(lastPosition, currentPosition)
+            // Move camera appropriately
+            camera.position = v.add(camera.position, v.div(delta, camera.zoom))
+            // Clamp camera to boundaries
+            camera.clamp()
+            // Update lastPosition
+            lastPosition = currentPosition
+            // Trigger repaint
+            celestialMap.update()
+        }
+        let endDrag = (_e) => {
+            // Destroy this function, ending drag behavior
+            document.removeEventListener('mousemove', onDrag)
+            document.removeEventListener('mouseup', this)
+            // Ignore default event behavior
+            return false
+        }
+        // Listen for mouse movement to 'drag', mouseup for signal to stop.
+        document.addEventListener('mousemove', onDrag)
+        document.addEventListener('mouseup', endDrag)
+        // Trigger repaint
+        celestialMap.update()
+    },
+    init() {
+        CANVAS.addEventListener('mousemove', (e) => this.onMove(e))
+        CANVAS.addEventListener('wheel', (e) => this.onWheel(e))
+        CANVAS.addEventListener('mousedown', (e) => this.onDown(e))
     }
-    let onMouseUp = (_e) => {
-        // Destroy this function, ending drag behavior
-        document.removeEventListener('mousemove', onMouseMove)
-        document.removeEventListener('mouseup', this)
-        // Ignore default event behavior
-        return false
-    }
-    document.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseup', onMouseUp)
-    updateCelestialMap()
 }
-
-let mouse = {position: {x: 0, y: 0}}
-CANVAS.addEventListener('mousemove', (e) => {
-    // Ignore default event behavior
-    e.preventDefault()
-    let canvasRect = CANVAS.getBoundingClientRect()
-    mouse.position = camera.transform.camera_to_world({
-        x: e.pageX - canvasRect.left,
-        y: e.pageY - canvasRect.top,
-    })
-    updateCelestialMap()
-})
-
-// Implements scrolling behavior on Celestial Map
-CANVAS.addEventListener('wheel', (e) => {
-    e.preventDefault()
-    let oldZoom = camera.zoom
-    camera.zoom -= e.deltaY
-    camera.zoom = util.bound(camera.zoom, ZOOM_MIN, ZOOM_MAX)
-
-    // Update camera position to 'zoom in' on mouse position
-    // Get difference in zoom between this and last
-    let zoomDelta = camera.zoom - oldZoom
-    // Get difference between camera position and mouse position
-    let zoomOffset = {
-        x: mouse.position.x - camera.position.x,
-        y: mouse.position.y - camera.position.y,
-    }
-    // Do the math (honestly this was a bit of trial and error)
-    camera.position.x += (zoomOffset.x * zoomDelta) / camera.zoom
-    camera.position.y += (zoomOffset.y * zoomDelta) / camera.zoom
-    camera.clamp()
-    updateCelestialMap()
-})
+mouse.init()
 
 let LINEWIDTH = 1
 let CLOSE_COLOR = '#828239'
 
-let centerCelestialMap = ({x, y}) => {
-    // playerPos = world_to_camera({x, y})
-    playerPos = camera.transform.world_to_camera({x, y})
-    pos = {
-        x: playerPos.x - (camera.bounds.x / 2),
-        y: playerPos.y - (camera.bounds.y / 2)
-    }
-    camera.position = camera.transform.camera_to_world(pos)
-    camera.clamp()
-    updateCelestialMap()
-}
-
 let celestialMap = {
-    onPlayerMovement: (player) => {
-        centerCelestialMap(player.position)
-    }
-}
+    onPlayerMovement(player) {
+        camera.centerOn(player.position)
+    },
+    update() {
+        let redraw = () => {
+            let ctx = CANVAS.getContext('2d')
+            let { width, height } = CANVAS
+            let lineWidth = 0.04 * camera.zoom
+            ctx.lineWidth = lineWidth
+            ctx.clearRect(0,0,width,height)
+            drawBorders()
+            drawMap()
+            drawPlayer()
+            writeInfo()
 
-let updateCelestialMap = () => {
-    let redraw = () => {
-        let ctx = CANVAS.getContext('2d')
-        let { width, height } = CANVAS
-        let lineWidth = 0.04 * camera.zoom
+            // Debug by printing to DOM in real time
+            function writeInfo() {
+                INFO.innerHTML = `CAMERA: ${JSON.stringify(camera)}<br/>` +
+                    `MOUSE: ${JSON.stringify(mouse)}`
+            }
 
-        ctx.lineWidth = lineWidth
-        ctx.clearRect(0,0,width,height)
-        drawBorders()
-        drawMap()
-        drawPlayer()
-        // writeInfo()
-        // onRedraw()
+            // Draws the map borders
+            function drawBorders() {
+                // Draw borders
+                ctx.strokeStyle = '#aaa'
+                let ul_corner = camera.transform.world_to_camera({x: -1, y: -1})
+                let br_corner = camera.transform.world_to_camera(map.bounds)
+                ctx.beginPath()
+                ctx.moveTo(ul_corner.x, ul_corner.y)
+                ctx.lineTo(br_corner.x, ul_corner.y)
+                ctx.lineTo(br_corner.x, br_corner.y)
+                ctx.lineTo(ul_corner.x, br_corner.y)
+                ctx.lineTo(ul_corner.x, ul_corner.y)
+                ctx.stroke()
+            }
 
-        // Debug by printing to DOM in real time
-        function writeInfo() {
-            INFO.innerHTML = `CAMERA: ${JSON.stringify(camera)}<br/>` +
-                `MOUSE: ${JSON.stringify(mouse)}`
-        }
+            // Takes a *screen* {x, y}, returns whether or not the camera can see it.
+            function withinCameraBounds({x, y}) {
+                return (x > -camera.zoom && x < width && y > -camera.zoom && y < height)
+            }
 
-        // Draws the map borders
-        function drawBorders() {
-            // Draw borders
-            ctx.strokeStyle = '#aaa'
-            let ul_corner = camera.transform.world_to_camera({x: -1, y: -1})
-            let br_corner = camera.transform.world_to_camera({x: map.bounds.x, y: map.bounds.y})
-            ctx.beginPath()
-            ctx.moveTo(ul_corner.x, ul_corner.y)
-            ctx.lineTo(br_corner.x, ul_corner.y)
-            ctx.lineTo(br_corner.x, br_corner.y)
-            ctx.lineTo(ul_corner.x, br_corner.y)
-            ctx.lineTo(ul_corner.x, ul_corner.y)
-            ctx.stroke()
-        }
+            // Draws the player ship
+            function drawPlayer() {
+                let { x, y } = camera.transform.world_to_camera(player.position)
+                let cockpitSize = 0.3
+                let shipSize = 0.6
+                // ship
+                ctx.strokeStyle = "#470c05"
+                ctx.fillStyle = "#8a1f12"
+                // outline
+                ctx.beginPath()
+                ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
+                ctx.fill()
+                // fill
+                ctx.beginPath()
+                ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
+                ctx.stroke()
+                // inner line
+                ctx.beginPath()
+                ctx.arc(x, y, (cockpitSize * camera.zoom) + lineWidth, 0, 2 * Math.PI)
+                ctx.stroke()
+                // cockpit
+                ctx.strokeStyle = "#5e65b8"
+                ctx.fillStyle = "#a8aeed"
+                ctx.beginPath()
+                ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
+                ctx.fill()
+                ctx.beginPath()
+                ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
+                ctx.stroke()
+            }
 
-        // Takes a *screen* {x, y}, returns whether or not the camera can see it.
-        function withinCameraBounds({x, y}) {
-            return (x > -camera.zoom && x < width &&
-                    y > -camera.zoom && y < height)
-        }
-
-        // Draws the player ship
-        function drawPlayer() {
-            let { x, y } = camera.transform.world_to_camera(player.position)
-            let cockpitSize = 0.3
-            let shipSize = 0.6
-
-            // ship
-            ctx.strokeStyle = "#470c05"
-            ctx.fillStyle = "#8a1f12"
-            // outline
-            ctx.beginPath()
-            ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
-            ctx.fill()
-            // fill
-            ctx.beginPath()
-            ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
-            ctx.stroke()
-            // inner line
-            ctx.beginPath()
-            ctx.arc(x, y, (cockpitSize * camera.zoom) + lineWidth, 0, 2 * Math.PI)
-            ctx.stroke()
-
-            // cockpit
-            ctx.strokeStyle = "#5e65b8"
-            ctx.fillStyle = "#a8aeed"
-            ctx.beginPath()
-            ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
-            ctx.fill()
-            ctx.beginPath()
-            ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
-            ctx.stroke()
-
-        }
-
-        // Draws the map, respects visibility
-        function drawMap() {
-            ctx.fillStyle = "#fcf4dc"
-            for (let x = 0; x < map.bounds.x; x += 1) {
-                for (let y = 0; y < map.bounds.y; y += 1) {
-                    if (!visible[x][y])
-                        continue;
-                    let screenPos = camera.transform.world_to_camera({x, y})
-                    let size = 0.04
-                    if (!withinCameraBounds(screenPos)) continue
-                    // "checkerboard" larger and smaller stars
-                    if (x % 2 == 1 && y % 2 == 0 || x % 2 == 0 && y % 2 == 1)
-                        size = 0.03
-                    ctx.beginPath()
-                    ctx.arc(screenPos.x, screenPos.y, size * camera.zoom, 0, 2 * Math.PI)
-                    ctx.fill();
+            // Draws the map, respects visibility
+            function drawMap() {
+                ctx.fillStyle = "#fcf4dc"
+                for (let x = 0; x < map.bounds.x; x += 1) {
+                    for (let y = 0; y < map.bounds.y; y += 1) {
+                        if (!visible[x][y])
+                            continue;
+                        let screenPos = camera.transform.world_to_camera({x, y})
+                        let size = 0.04
+                        if (!withinCameraBounds(screenPos)) continue
+                        // "checkerboard" larger and smaller stars
+                        if (x % 2 == 1 && y % 2 == 0 || x % 2 == 0 && y % 2 == 1)
+                            size = 0.02
+                        ctx.beginPath()
+                        ctx.arc(
+                            screenPos.x,
+                            screenPos.y,
+                            size * camera.zoom, 0, 2 * Math.PI)
+                        ctx.fill();
+                    }
                 }
             }
         }
+        requestAnimationFrame(redraw)
     }
-    requestAnimationFrame(redraw)
 }
 
 // call this on move event
-updateCelestialMap()
+celestialMap.update()
