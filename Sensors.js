@@ -15,7 +15,7 @@ function fireSensors() {
     }
     
     //Update the map to show new celestial points
-    updateCelestialMap();
+    celestialMap.update();
 
     //Decrease supplies by 2% and check them
     decrementSupplies(2);
@@ -38,15 +38,15 @@ function setVisible(radius) {
                     //Get some random coordinates on the grid
                     randomX = Math.floor(Math.random() * map.bounds.x);
                     randomY = Math.floor(Math.random() * map.bounds.y);
-                    if (visible[randomX][randomY] === false) {
-                        visible[randomX][randomY] = true;
+                    if (map.data[randomX][randomY].visible === false) {
+                        map.data[randomX][randomY].visible = true;
                     }
                     continue;//Since we already checked a point continue so we don't do two points in 1 run
                 }
             }
             //mod function to loop sensors around the map
-            if (visible[mod(x, map.bounds.x)][mod(y, map.bounds.y)] === false) {
-                visible[mod(x, map.bounds.x)][mod(y, map.bounds.y)] = true;
+            if (map.data[mod(x, map.bounds.x)][mod(y, map.bounds.y)].visible === false) {
+                map.data[mod(x, map.bounds.x)][mod(y, map.bounds.y)].visible = true;
             }
         }
     }

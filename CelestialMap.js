@@ -49,24 +49,6 @@ let util = {
     }
 }
 
-// Resizes the canvas and sets anything that needs to be updated to reflect
-// the new canvas size.
-function onResize() {
-    let parent = document.querySelector('#celestial-map-container')
-    CANVAS.width = parent.clientWidth
-    CANVAS.height = parent.clientHeight
-    ZOOM_MIN = Math.max(
-        CANVAS.width / (map.bounds.x + 3),
-        CANVAS.height / (map.bounds.y + 3),
-    )
-    camera.bounds = {
-        x: CANVAS.width,
-        y: CANVAS.height,
-    }
-}
-window.addEventListener('resize', onResize)
-onResize()
-
 
 // Camera object represents where our view is in the world
 let camera = {
@@ -145,9 +127,14 @@ let camera = {
     },
     init() {
         this.centerOn(player.position)
+    },
+    // Takes a *screen* {x, y}, returns whether or not the camera can see it.
+    // TODO is there a better way??
+    withinBounds({x, y}) {
+        let { width, height } = CANVAS
+        return (x > -camera.zoom && x < width && y > -camera.zoom && y < height)
     }
 }
-camera.init()
 
 let mouse = {
     position: {x: 0, y: 0},
@@ -216,10 +203,158 @@ let mouse = {
         CANVAS.addEventListener('mousedown', (e) => this.onDown(e))
     }
 }
-mouse.init()
 
-let LINEWIDTH = 1
+let LINEWIDTH = 0.04
 let CLOSE_COLOR = '#828239'
+
+const draw = {
+    ctx: null,
+    lineWidth: null,
+    init() {
+        let { width, height } = CANVAS
+        this.ctx = CANVAS.getContext('2d')
+        this.ctx.lineWidth = this.lineWidth = LINEWIDTH * camera.zoom
+        this.ctx.clearRect(0, 0, width, height)
+    },
+    player(position) {
+        let pos = camera.transform.world_to_camera(position)
+        if (!camera.withinBounds(pos))
+            return;
+        let {x, y} = pos
+        let cockpitSize = 0.3
+        let shipSize = 0.6
+        let { ctx, lineWidth } = this
+        // ship
+        ctx.strokeStyle = "#470c05"
+        ctx.fillStyle = "#8a1f12"
+        // outline
+        ctx.beginPath()
+        ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
+        ctx.fill()
+        // fill
+        ctx.beginPath()
+        ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
+        ctx.stroke()
+        // inner line
+        ctx.beginPath()
+        ctx.arc(x, y, (cockpitSize * camera.zoom) + lineWidth, 0, 2 * Math.PI)
+        ctx.stroke()
+        // cockpit
+        ctx.strokeStyle = "#5e65b8"
+        ctx.fillStyle = "#a8aeed"
+        ctx.beginPath()
+        ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
+        ctx.fill()
+        ctx.beginPath()
+        ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
+        ctx.stroke()
+    },
+    border() {
+        let { ctx } = this
+        // Draw borders
+        ctx.strokeStyle = '#aaa'
+        let ul_corner = camera.transform.world_to_camera({x: -1, y: -1})
+        let br_corner = camera.transform.world_to_camera(map.bounds)
+        ctx.beginPath()
+        ctx.moveTo(ul_corner.x, ul_corner.y)
+        ctx.lineTo(br_corner.x, ul_corner.y)
+        ctx.lineTo(br_corner.x, br_corner.y)
+        ctx.lineTo(ul_corner.x, br_corner.y)
+        ctx.lineTo(ul_corner.x, ul_corner.y)
+        ctx.stroke()
+    },
+    blank(position) {
+        let { ctx } = this
+        let pos = camera.transform.world_to_camera(position)
+        if (!camera.withinBounds(pos))
+            return;
+        // "checker"
+        let size = (({x,y}) => {
+            return x % 2 == 1 && y % 2 == 0 || x % 2 == 0 && y % 2 == 1 ?
+                0.02 : 0.04
+        })(position)
+
+        ctx.fillStyle = "#fcf4dc"
+        // "checkerboard" larger and smaller stars
+        let {x, y} = pos
+        ctx.beginPath()
+        ctx.arc(x, y, size * camera.zoom, 0, 2 * Math.PI)
+        ctx.fill()
+    },
+    asteroid(position) {
+        let v = util.vector2math
+        let { ctx } = this
+        let pos = camera.transform.world_to_camera(position)
+        if (!camera.withinBounds(pos))
+            return;
+        let {x, y} = pos
+        let main_size = 0.2 * camera.zoom
+        let detail_size = 0.1 * camera.zoom
+        ctx.fillStyle = "#615942"
+        ctx.beginPath()
+        ctx.arc(x, y, main_size, 0, 2 * Math.PI)
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.arc(x, y, main_size, 0, 2 * Math.PI)
+        ctx.fill()
+
+        for (let i = 0; i < 4; ++i) {
+            let offset = {
+                x: Math.random(),
+                y: Math.random(),
+            }
+            v.mul(offset, detail_size)
+        }
+    },
+    planet(position) {
+        let { ctx } = this
+        let pos = camera.transform.world_to_camera(position)
+        if (!camera.withinBounds(pos))
+            return;
+        let {x, y} = pos
+        let main_size = 0.7
+        ctx.fillStyle = "#2A258E"
+        ctx.beginPath()
+        ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
+        ctx.fill()
+    },
+    spaceStation(position) {
+        let { ctx } = this
+        let pos = camera.transform.world_to_camera(position)
+        if (!camera.withinBounds(pos))
+            return;
+        let {x, y} = pos
+        let main_size = 0.25
+        ctx.fillStyle = "#888888"
+        ctx.beginPath()
+        ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
+        ctx.fill()
+    },
+    map() {
+        let { ctx } = this
+        this.border()
+        for (let x = 0; x < map.bounds.x; x += 1) {
+            for (let y = 0; y < map.bounds.y; y += 1) {
+                let tile = map.data[x][y]
+                if (!tile.visible)
+                    continue;
+                let screenPos = camera.transform.world_to_camera({x, y})
+                if (!camera.withinBounds(screenPos)) continue
+                if (!tile.artifact)
+                    this.blank({x, y})
+                else if (!tile.artifact.type)
+                    throw new Error('Map position contains artifact object missing "type" property')
+                else
+                    switch (tile.artifact.type) {
+                        case ASTEROID: this.asteroid({x, y}); break
+                        case PLANET: this.planet({x, y}); break
+                        case SPACE_STATION: this.spaceStation({x, y}); break
+                    }
+            }
+        }
+    }
+}
 
 let celestialMap = {
     onPlayerMovement(player) {
@@ -227,14 +362,9 @@ let celestialMap = {
     },
     update() {
         let redraw = () => {
-            let ctx = CANVAS.getContext('2d')
-            let { width, height } = CANVAS
-            let lineWidth = 0.04 * camera.zoom
-            ctx.lineWidth = lineWidth
-            ctx.clearRect(0,0,width,height)
-            drawBorders()
-            drawMap()
-            drawPlayer()
+            draw.init()
+            draw.map()
+            draw.player(player.position)
             writeInfo()
 
             // Debug by printing to DOM in real time
@@ -242,84 +372,30 @@ let celestialMap = {
                 INFO.innerHTML = `CAMERA: ${JSON.stringify(camera)}<br/>` +
                     `MOUSE: ${JSON.stringify(mouse)}`
             }
-
-            // Draws the map borders
-            function drawBorders() {
-                // Draw borders
-                ctx.strokeStyle = '#aaa'
-                let ul_corner = camera.transform.world_to_camera({x: -1, y: -1})
-                let br_corner = camera.transform.world_to_camera(map.bounds)
-                ctx.beginPath()
-                ctx.moveTo(ul_corner.x, ul_corner.y)
-                ctx.lineTo(br_corner.x, ul_corner.y)
-                ctx.lineTo(br_corner.x, br_corner.y)
-                ctx.lineTo(ul_corner.x, br_corner.y)
-                ctx.lineTo(ul_corner.x, ul_corner.y)
-                ctx.stroke()
-            }
-
-            // Takes a *screen* {x, y}, returns whether or not the camera can see it.
-            function withinCameraBounds({x, y}) {
-                return (x > -camera.zoom && x < width && y > -camera.zoom && y < height)
-            }
-
-            // Draws the player ship
-            function drawPlayer() {
-                let { x, y } = camera.transform.world_to_camera(player.position)
-                let cockpitSize = 0.3
-                let shipSize = 0.6
-                // ship
-                ctx.strokeStyle = "#470c05"
-                ctx.fillStyle = "#8a1f12"
-                // outline
-                ctx.beginPath()
-                ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
-                ctx.fill()
-                // fill
-                ctx.beginPath()
-                ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
-                ctx.stroke()
-                // inner line
-                ctx.beginPath()
-                ctx.arc(x, y, (cockpitSize * camera.zoom) + lineWidth, 0, 2 * Math.PI)
-                ctx.stroke()
-                // cockpit
-                ctx.strokeStyle = "#5e65b8"
-                ctx.fillStyle = "#a8aeed"
-                ctx.beginPath()
-                ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
-                ctx.fill()
-                ctx.beginPath()
-                ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
-                ctx.stroke()
-            }
-
-            // Draws the map, respects visibility
-            function drawMap() {
-                ctx.fillStyle = "#fcf4dc"
-                for (let x = 0; x < map.bounds.x; x += 1) {
-                    for (let y = 0; y < map.bounds.y; y += 1) {
-                        if (!visible[x][y])
-                            continue;
-                        let screenPos = camera.transform.world_to_camera({x, y})
-                        let size = 0.04
-                        if (!withinCameraBounds(screenPos)) continue
-                        // "checkerboard" larger and smaller stars
-                        if (x % 2 == 1 && y % 2 == 0 || x % 2 == 0 && y % 2 == 1)
-                            size = 0.02
-                        ctx.beginPath()
-                        ctx.arc(
-                            screenPos.x,
-                            screenPos.y,
-                            size * camera.zoom, 0, 2 * Math.PI)
-                        ctx.fill();
-                    }
-                }
-            }
         }
         requestAnimationFrame(redraw)
     }
 }
 
+mouse.init()
+camera.init()
 // call this on move event
 celestialMap.update()
+
+// Resizes the canvas and sets anything that needs to be updated to reflect
+// the new canvas size.
+function onResize() {
+    let parent = document.querySelector('#celestial-map-container')
+    CANVAS.width = parent.clientWidth
+    CANVAS.height = parent.clientHeight
+    ZOOM_MIN = Math.max(
+        CANVAS.width / (map.bounds.x + 3),
+        CANVAS.height / (map.bounds.y + 3),
+    )
+    camera.bounds = {
+        x: CANVAS.width,
+        y: CANVAS.height,
+    }
+}
+window.addEventListener('resize', onResize)
+onResize()

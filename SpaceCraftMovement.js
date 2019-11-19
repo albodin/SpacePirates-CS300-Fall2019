@@ -75,7 +75,7 @@ function movement(angle, distance) {
         // Down
         else if (angle === 4) {
             if(player.position.x - i < 0){
-                player.position = map.bounds.x
+                player.position.x = map.bounds.x
             }
             player.position.x--;
         }
