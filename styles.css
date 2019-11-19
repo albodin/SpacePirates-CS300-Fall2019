@@ -4,6 +4,7 @@ body {
     font-family: 'Space Mono', monospace;
     text-align: center;
     background: #111;
+    color: #777;
     margin: 0;
 }
 
@@ -17,6 +18,7 @@ body {
     animation-name: title-pulse;
     animation-duration: 4s;
     animation-iteration-count: infinite;
+    color: black;
 }
 
 @keyframes title-pulse {
