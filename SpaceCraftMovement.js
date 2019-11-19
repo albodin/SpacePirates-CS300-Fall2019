@@ -25,6 +25,7 @@ const checkWormHole = () => {
     }
 }
 
+/*
 const outOfBounds = (newPos) => {
     if (newPos > map.bounds.x || player.position.x < 0 || player.position.y > map.bounds.y || player.position.y < 0) {
         //if wormhole is active, redirect player to random position
