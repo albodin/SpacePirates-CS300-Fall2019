@@ -1,9 +1,106 @@
-@import url('https://fonts.googleapis.com/css?family=Risque&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Space+Mono&display=swap');
+
+body {
+    font-family: 'Space Mono', monospace;
+    text-align: center;
+    background: #111;
+    margin: 0;
+}
 
 .title {
-    font-family: Risque;
-    font-size: 48px;
+    text-transform: uppercase;
+    font-size: 64px;
     text-align: center;
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    animation-name: title-pulse;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes title-pulse {
+    0% { text-shadow: 0 0 1px #BDFF65, 0 0 2px #8BCE31, 0 0 6px #3B8E01; }
+    50% { text-shadow: 0 0 4px #BDFF65, 0 0 8px #8BCE31, 0 0 14px #3B8E01; }
+    100% { text-shadow: 0 0 1px #BDFF65, 0 0 2px #8BCE31, 0 0 6px #3B8E01; }
+}
+
+.ui-panel {
+    /*width: 500px;*/
+    margin:auto;
+    margin-bottom: 0;
+    background: #222;
+    padding: 2px;
+}
+
+/*hide number picker*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/*hide number picker*/
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+input {
+    border: 4px solid #111;
+    font-size: 20px;
+    background: #333;
+    color: #6BAE11;
+    padding: 4px;
+    text-shadow: 0 0 4px #8BCE31;
+    transition: text-shadow 0.5s, background 0.2s, color 0.05s;
+}
+
+input[type=number] {
+    width: 100px;
+}
+
+.d-pad input[type=button] {
+    width: 68px;
+    height: 68px;
+    padding: 0;
+    font-size: 50px;
+}
+
+.d-pad input[type=button]:hover {
+    text-shadow: 0 0 9px #8BCE31, 0 0 15px #0B6E01;
+    transition: text-shadow 0.6s, background 0.6s, color 0.03s;
+}
+
+.d-pad input[type=button]:active {
+    background: #292929;
+    color: #B4FFBA;
+    text-shadow: 0 0 4px #BDFF65, 0 0 8px #8BCE31, 0 0 14px #3B8E01;
+    transition: text-shadow 0.01s, background 0.01s, color 0.01s;
+}
+
+.d-pad th {
+    font-size: 38px;
+    padding: 0;
+    margin: 0;
+}
+
+.d-pad, .status {
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    z-index: 20;
+}
+
+.d-pad { right: 0; }
+.status { left: 0; }
+
+.status-field {
+    display: inline-block;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 2px;
+    margin:0;
+    color: #777;
 }
 
 canvas {
@@ -11,16 +108,21 @@ canvas {
 }
 
 .celestial-map-panel {
-    padding: 20px;
-    border: 4px;
-    background: grey;
-    border: outset;
+    /*padding: 20px;*/
+    /*border: 4px;*/
+    background: #222;
+    padding: 0;
+    margin: 0;
 }
 
 #celestial-map-container {
-    border: inset;
     padding: 0;
     margin: 0;
+    position: absolute;
+    top: 200px;
+    width: 100%;
+    bottom: 0;
+    z-index: 10;
 }
 
 ul {
@@ -45,4 +147,11 @@ li a {
 
 li a:hover {
   background-color: #111;
+}
+
+.full-width {
+    width: 100%;
+}
+.full-width input {
+    min-width: 100%;
 }

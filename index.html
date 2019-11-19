@@ -1,14 +1,9 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <! --
-//
-// *** 
-// *** JavaScript functions loaded as include files
-// *** Allows each team member to own their own code
-// ***
-//
--->
+
+<head>
+  <meta charset="UTF-8" />
+  <! -- // // *** // *** JavaScript functions loaded as include files // *** Allows each team member to own their own
+    code // *** // -->
 
     <!--
 // *** User Story: SH-3	Running out of energy	Priority: HIGH
@@ -43,78 +38,110 @@
 // *** is located at nearby Celestial Points, so
 // *** I Know where things are.
 -->
-<script src="Sensors.js"></script>
+    <script src="Sensors.js"></script>
 
 
-<!--Global variables-->
+    <!--Global variables-->
     <script src="globals.js"></script>
 
-<!--Settings-->
+    <!--Settings-->
     <script src="settings.js"></script>
 
     <link rel="stylesheet" href="styles.css" />
-  </head>
+</head>
 
-  <body onload="readSettings()">
-	<ul>
-	  <li><a class="active" href="#home">Home</a></li>
-	  <li><a href="settings.html">Settings</a></li>
-	  <li><a href="#about">About</a></li>
-	</ul>
-    <h1 class="title">SpaceHunt</h1>
-    <form name="UI">
-      STATUS
-      <p>
-        Current Location: X
-        <input type="text" id="xVal" name="xValue" size="4" /> Y
-        <input type="text" id="yVal" name="yValue" size="4" />
-      </p>
-
-      <p></p>
-      <p>Energy <input type="text"  id="energy" name="energy" size="4" /></p>
-      <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" />%</p>
-      <p></p>
-      <hr />
-      MAKE A MOVE
-      <p>
-        Distance <input type="text" id="distance" name="distance" size="4" />
-      </p>
-      <p>
-        <input
-          type="button"
-          value="Up"
-          onclick="moveSpacecraft(3,distance)"
-        />
-        <input
-          type="button"
-          value="Down"
-          onclick="moveSpacecraft(1,distance)"
-        />
-        <input
-          type="button"
-          value="Left"
-          onclick="moveSpacecraft(4,distance)"
-        />
-        <input 
-          type="button"
-          value="Right"
-          onclick="moveSpacecraft(2,distance)"
-          />
-        <input
-        type="button"
-        value="Fire Sensors"
-        onclick="fireSensors()"
-        />
-      </p>
+<body onload="readSettings()">
+  <ul>
+    <li><a class="active" href="#home">Home</a></li>
+    <li><a href="settings.html">Settings</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <div class="ui-panel">
+      <form name="UI">
+        <h1 class="title">SpaceHunt</h1>
+        <div class="d-pad">
+            <table>
+              <tr>
+                  <th></th>
+                  <!-- up -->
+                  <th>
+                    <input
+                      type="button"
+                      value="&#8593;"
+                      onclick="moveSpacecraft(3,distance)" />
+                  </th>
+                  <th></th>
+              </tr>
+              <tr>
+                  <!-- left -->
+                  <th>
+                    <input
+                      type="button"
+                      value="&#8592;"
+                      onclick="moveSpacecraft(4,distance)" />
+                  </th>
+                  <!-- sensors -->
+                  <th>
+                    <input type="button" value="S" onclick="fireSensors()" />
+                  </th>
+                  <th>
+                  <!-- right -->
+                    <input
+                      type="button"
+                      value="&#8594;"
+                      onclick="moveSpacecraft(2,distance)" />
+                  </th>
+              </tr>
+              <tr>
+                  <th></th>
+                  <!-- down -->
+                  <th>
+                    <input
+                      type="button"
+                      value="&#8595;"
+                      onclick="moveSpacecraft(1,distance)" />
+                  </th>
+                  <th></th>
+              </tr>
+            </table>
+            <div class="status-field full-width">
+                &nbsp;Distance<br/><input type="number" id="distance" name="distance" size="4" value="1"/>
+            </div>
+        </div>
+        <div class="status">
+            <div class="status-field">
+                &nbsp;X
+                <br/><input type="number" id="xVal" name="xValue" size="4" onchange="modifyMapPositionFromInput()"/>
+            </div>
+            <div class="status-field">
+                &nbsp;Y
+                <br/><input type="number" id="yVal" name="yValue" size="4" onchange="modifyMapPositionFromInput()"/>
+            </div>
+            <div class="status-field">
+                &nbsp;Energy
+                <br/><input type="number" id="energy" name="energy" size="4" />
+            </div>
+            <div class="status-field">
+                &nbsp;Supplies
+                <br/><input type="number" id="supplies" name="supplies" size="4" />
+            </div>
+        </div>
     </form>
-
-    <div class="celestial-map-panel">
-      <div id="celestial-map-container">
-        <canvas id="celestial-map" width="504" height="504"></canvas>
-      </div>
+  </div>
+  <div class="celestial-map-panel">
+    <div id="celestial-map-container">
+      <canvas id="celestial-map" width="504" height="504"></canvas>
     </div>
-    <p id="celestial-map-info"></p>
-
+  </div>
+  <p id="celestial-map-info"></p>
+    <!--
+// *** User Story: SH-6 Celestial Map: HIGH
+   *** As a player, I want to see all the cells in the game map I have visited
+   *** and what is located in each cell upon request, so I can plan my next
+   *** moves.
+-->
     <script src="CelestialMap.js"></script>
+    <!-- Starts the game -->
+    <script>restart()</script>
   </body>
 </html>
