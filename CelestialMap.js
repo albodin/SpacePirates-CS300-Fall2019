@@ -17,33 +17,42 @@ const CAMERA_MAX = { x: map.bounds.x - 1, y: map.bounds.y - 1 }
 // Small utility functions
 let util = {
     // Bounds a number between minimum and maximum value
-    bound: (num, min, max) => { return num < min ?  min : num > max ?  max : num },
+    bound: (num, min, max) => { return Math.min(Math.max(num, min), max) },
     // Adds "vector2 math" for dealing with {x, y} objects as vectors
     // Always return a new vector.
     vector2math: {
+        // Vector2 Multiply
         mul(v1, v2) {
-            v1 = this.validate(v1); v2 = this.validate(v2)
+            v1 = this.from(v1); v2 = this.from(v2)
             return { x: v1.x * v2.x, y: v1.y * v2.y }
         },
+        // Vector2 Divide
         div(v1, v2) {
-            v1 = this.validate(v1); v2 = this.validate(v2)
+            v1 = this.from(v1); v2 = this.from(v2)
             return { x: v1.x / v2.x, y: v1.y / v2.y }
         },
+        // Vector2 Add
         add(v1, v2) {
-            v1 = this.validate(v1); v2 = this.validate(v2)
+            v1 = this.from(v1); v2 = this.from(v2)
             return { x: v1.x + v2.x, y: v1.y + v2.y }
         },
+        // Vector2 Subtract
         sub(v1, v2) {
-            v1 = this.validate(v1); v2 = this.validate(v2)
+            v1 = this.from(v1); v2 = this.from(v2)
             return { x: v1.x - v2.x, y: v1.y - v2.y }
         },
-        validate(v) {
+        from(v) {
+            // if v is a vector, we're good, return it
             if (typeof v === 'object' &&
                 v.hasOwnProperty('x') &&
                 v.hasOwnProperty('y'))
                 return v;
+            // if v is a number, simply turn it into a vector
+            // this means algebra will work as expected with numbers or
+            // vectors
             if (typeof v === 'number')
-                return {x: v, y: v};
+                return {x: v, y: v}
+            // Bad argument
             throw new Error('v must be a number or an object {x, y}')
         }
     }
@@ -252,7 +261,7 @@ const draw = {
     border() {
         let { ctx } = this
         // Draw borders
-        ctx.strokeStyle = '#aaa'
+        ctx.strokeStyle = '#6323CA'
         let ul_corner = camera.transform.world_to_camera({x: -1, y: -1})
         let br_corner = camera.transform.world_to_camera(map.bounds)
         ctx.beginPath()
@@ -332,7 +341,6 @@ const draw = {
         ctx.fill()
     },
     map() {
-        let { ctx } = this
         this.border()
         for (let x = 0; x < map.bounds.x; x += 1) {
             for (let y = 0; y < map.bounds.y; y += 1) {
@@ -365,7 +373,7 @@ let celestialMap = {
             draw.init()
             draw.map()
             draw.player(player.position)
-            writeInfo()
+            // writeInfo()
 
             // Debug by printing to DOM in real time
             function writeInfo() {
@@ -396,6 +404,8 @@ function onResize() {
         x: CANVAS.width,
         y: CANVAS.height,
     }
+    camera.clamp()
+    camera.zoomBy(0)
 }
 window.addEventListener('resize', onResize)
 onResize()
