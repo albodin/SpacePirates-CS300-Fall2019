@@ -358,9 +358,13 @@ const draw = {
                     throw new Error('Map position contains artifact object missing "type" property')
                 else
                     switch (tile.artifact.type) {
-                        case ASTEROID: this.asteroid({x, y}); break
-                        case PLANET: this.planet({x, y}, tile.artifact.color); break
-                        case SPACE_STATION: this.spaceStation({x, y}); break
+                        // TODO the rest
+                        case CA__ASTEROID: this.asteroid({x, y}); break
+                        case CA__PLANET: this.planet({x, y}, tile.artifact.color); break
+                        case CA__SPACE_STATION: this.spaceStation({x, y}); break
+                        case CA__ABANDONED_FREIGHTER: throw new Error('not implemented')
+                        case CA__MINI_MART: throw new Error('not implemented')
+                        case CA__KOKA_KOLA: throw new Error('not implemented')
                     }
             }
         }

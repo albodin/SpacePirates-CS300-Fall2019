@@ -1,10 +1,13 @@
 //The global variables used for the game are placed here
 
-// Enums
-const ASTEROID = 'asteroid'
-const PLANET = 'planet'
-const SPACE_STATION = 'spaceStation'
-const ABANDONED_FREIGHTER = 'abandonedFreighter'
+// "Enums"
+// Celestial Artifact Types
+const CA__ASTEROID = 'asteroid'
+const CA__PLANET = 'planet'
+const CA__SPACE_STATION = 'spaceStation'
+const CA__ABANDONED_FREIGHTER = 'abandonedFreighter'
+const CA__MINI_MART = 'miniMart'
+const CA__KOKA_KOLA = 'miniMart'
 
 var supplies = 0;
 var energy = 0;
@@ -43,13 +46,13 @@ map.data = Array(map.bounds.x)
 
 function placeArtifacts() {
     // fills map with some artifacts
-    map.data[0][0].artifact = { type: ASTEROID }
-    map.data[3][3].artifact = { type: PLANET }
-    map.data[2][2].artifact = { type: SPACE_STATION }
+    map.data[0][0].artifact = { type: CA__ASTEROID }
+    map.data[3][3].artifact = { type: CA__PLANET }
+    map.data[2][2].artifact = { type: CA__SPACE_STATION }
     map.data[16][16] = {
         visible: true,
         artifact: {
-            type: PLANET,
+            type: CA__PLANET,
             name: 'Celeron',
             color: '#994433',
         }
@@ -57,7 +60,7 @@ function placeArtifacts() {
     map.data[2][4] = {
         visible: true,
         artifact: {
-            type: PLANET,
+            type: CA__PLANET,
             name: 'Xeon',
             color: '#449933',
         }
@@ -65,7 +68,7 @@ function placeArtifacts() {
     map.data[2][6] = {
         visible: true,
         artifact: {
-            type: PLANET,
+            type: CA__PLANET,
             name: 'Ryzen',
             color: '#999922',
         }
