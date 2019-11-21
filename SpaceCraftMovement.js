@@ -119,23 +119,15 @@ function movement(angle, distance) {
 
 
         //update the Energy after a player makes a move
-        decrementEnergy(energyCost);
-        decrementSupplies()
+        decrementEnergy(energyCost);  
         //Set the points to visible with a radius of 1 around the player
         setVisible(1);
         console.log(energy)
         console.log(player.position)
     }
-
+    decrementSupplies(2);
 };
 
-
-function decrementSupplies() {
-    //let decrementAmt = getInitialSupplies()*.02
-    supplies -= document.getElementById("supplies").value*.02
-    console.log(supplies)
-    document.getElementById("supplies").value = supplies;
-}
 
 let currentPosition = () => {
     //update x 
