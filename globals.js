@@ -40,7 +40,33 @@ map.data = Array(map.bounds.x)
         }
     }))
 
-// fills map with some artifacts
-map.data[0][0].artifact = { type: ASTEROID }
-map.data[3][3].artifact = { type: PLANET }
-map.data[2][2].artifact = { type: SPACE_STATION }
+function placeArtifacts() {
+    // fills map with some artifacts
+    map.data[0][0].artifact = { type: ASTEROID }
+    map.data[3][3].artifact = { type: PLANET }
+    map.data[2][2].artifact = { type: SPACE_STATION }
+    map.data[16][16] = {
+        visible: true,
+        artifact: {
+            type: PLANET,
+            name: 'Celeron',
+            color: '#994433',
+        }
+    }
+    map.data[2][4] = {
+        visible: true,
+        artifact: {
+            type: PLANET,
+            name: 'Xeon',
+            color: '#449933',
+        }
+    }
+    map.data[2][6] = {
+        visible: true,
+        artifact: {
+            type: PLANET,
+            name: 'Ryzen',
+            color: '#999922',
+        }
+    }
+}

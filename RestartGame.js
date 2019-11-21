@@ -13,7 +13,9 @@ function restart() {
     //reset visibility
     for(i= 0; i < map.bounds.x; ++i){
         for(j = 0; j < map.bounds.x; ++j){
-            map.data[i][j].visible = false;
+            map.data[i][j] = {visible: false, artifact: null}
         }
     }
+    //places artifacts
+    placeArtifacts()
 }

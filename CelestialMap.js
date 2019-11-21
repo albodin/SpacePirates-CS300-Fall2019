@@ -316,14 +316,17 @@ const draw = {
             v.mul(offset, detail_size)
         }
     },
-    planet(position) {
+    planet(position, color) {
         let { ctx } = this
         let pos = camera.transform.world_to_camera(position)
         if (!camera.withinBounds(pos))
             return;
         let {x, y} = pos
         let main_size = 0.7
-        ctx.fillStyle = "#2A258E"
+        if (color)
+            ctx.fillStyle = color
+        else
+            ctx.fillStyle = "#2A258E"
         ctx.beginPath()
         ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
         ctx.fill()
@@ -356,7 +359,7 @@ const draw = {
                 else
                     switch (tile.artifact.type) {
                         case ASTEROID: this.asteroid({x, y}); break
-                        case PLANET: this.planet({x, y}); break
+                        case PLANET: this.planet({x, y}, tile.artifact.color); break
                         case SPACE_STATION: this.spaceStation({x, y}); break
                     }
             }
