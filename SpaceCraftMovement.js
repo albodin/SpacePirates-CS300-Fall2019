@@ -132,7 +132,7 @@ function movement(angle, distance) {
 
 function decrementSupplies() {
     //let decrementAmt = getInitialSupplies()*.02
-    supplies -= Math.floor(document.getElementById("supplies").value*.02)
+    supplies -= document.getElementById("supplies").value*.02
     console.log(supplies)
     document.getElementById("supplies").value = supplies;
 }
