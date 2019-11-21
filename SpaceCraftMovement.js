@@ -20,7 +20,7 @@ const checkWormHole = () => {
     if (isWormholeActive) {
         player.position.x = getRandomInt(map.bounds.x, 0)
         player.position.x = getRandomInt(map.bounds.y, 0)
-    }else{
+    } else {
         return false
     }
 }
@@ -71,7 +71,7 @@ function movement(angle, distance) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
                 } else {
-                player.position.y = 0
+                    player.position.y = 0
                 }
             } else {
                 player.position.y++;
@@ -84,7 +84,7 @@ function movement(angle, distance) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
                 } else {
-                player.position.x = 0
+                    player.position.x = 0
                 }
             } else {
                 player.position.x++;
@@ -97,7 +97,7 @@ function movement(angle, distance) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
                 } else {
-                player.position.y = map.bounds.y
+                    player.position.y = map.bounds.y
                 }
             } else {
                 player.position.y--;
@@ -110,7 +110,7 @@ function movement(angle, distance) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
                 } else {
-                player.position.x = map.bounds.x
+                    player.position.x = map.bounds.x
                 }
             } else {
                 player.position.x--;
@@ -120,7 +120,7 @@ function movement(angle, distance) {
 
         //update the Energy after a player makes a move
         decrementEnergy(energyCost);
-
+        decrementSupplies()
         //Set the points to visible with a radius of 1 around the player
         setVisible(1);
         console.log(energy)
@@ -128,6 +128,14 @@ function movement(angle, distance) {
     }
 
 };
+
+
+function decrementSupplies() {
+    //let decrementAmt = getInitialSupplies()*.02
+    supplies -= Math.floor(document.getElementById("supplies").value*.02)
+    console.log(supplies)
+    document.getElementById("supplies").value = supplies;
+}
 
 let currentPosition = () => {
     //update x 
