@@ -4,6 +4,7 @@
 const ASTEROID = 'asteroid'
 const PLANET = 'planet'
 const SPACE_STATION = 'spaceStation'
+const ABANDONED_FREIGHTER = 'abandonedFreighter'
 
 var supplies = 0;
 var energy = 0;
