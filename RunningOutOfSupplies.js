@@ -10,6 +10,7 @@ function checkSupplies() {
 }
 
 function decrementSupplies(amount) {
+   supplies = parseInt(document.getElementById("supplies").value);
    supplies -= amount;
    document.getElementById("supplies").value = supplies;
 }
