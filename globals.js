@@ -2,12 +2,12 @@
 
 // "Enums"
 // Celestial Artifact Types
-const CA__ASTEROID = 'asteroid'
-const CA__PLANET = 'planet'
-const CA__SPACE_STATION = 'spaceStation'
-const CA__ABANDONED_FREIGHTER = 'abandonedFreighter'
-const CA__MINI_MART = 'miniMart'
-const CA__KOKA_KOLA = 'miniMart'
+const CA__ASTEROID = 'Asteroid'
+const CA__PLANET = 'Planet'
+const CA__SPACE_STATION = 'Space Station'
+const CA__ABANDONED_FREIGHTER = 'Abandoned Freighter'
+const CA__MINI_MART = 'Mini Mart'
+const CA__KOKA_KOLA = 'Koka Kola'
 
 var supplies = 0;
 var energy = 0;
@@ -44,33 +44,5 @@ map.data = Array(map.bounds.x)
         }
     }))
 
-function placeArtifacts() {
-    // fills map with some artifacts
-    map.data[0][0].artifact = { type: CA__ASTEROID }
-    map.data[3][3].artifact = { type: CA__PLANET }
-    map.data[2][2].artifact = { type: CA__SPACE_STATION }
-    map.data[16][16] = {
-        visible: true,
-        artifact: {
-            type: CA__PLANET,
-            name: 'Celeron',
-            color: '#994433',
-        }
-    }
-    map.data[2][4] = {
-        visible: true,
-        artifact: {
-            type: CA__PLANET,
-            name: 'Xeon',
-            color: '#449933',
-        }
-    }
-    map.data[2][6] = {
-        visible: true,
-        artifact: {
-            type: CA__PLANET,
-            name: 'Ryzen',
-            color: '#999922',
-        }
-    }
-}
+// Places artifacts on the map
+placeArtifacts()

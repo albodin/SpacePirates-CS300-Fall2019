@@ -61,22 +61,28 @@ input[type=number] {
 }
 
 .d-pad input[type=button] {
-    width: 68px;
+    width: 80px;
     height: 68px;
     padding: 0;
-    font-size: 50px;
+    font-size: 20px;
 }
 
 .d-pad input[type=button]:hover {
     text-shadow: 0 0 9px #8BCE31, 0 0 15px #0B6E01;
+    background: #292929;
     transition: text-shadow 0.6s, background 0.6s, color 0.03s;
 }
 
 .d-pad input[type=button]:active {
     background: #292929;
+    background: #222222;
     color: #B4FFBA;
     text-shadow: 0 0 4px #BDFF65, 0 0 8px #8BCE31, 0 0 14px #3B8E01;
     transition: text-shadow 0.01s, background 0.01s, color 0.01s;
+}
+
+.d-pad input[type=button].sensors {
+    font-size: 50px;
 }
 
 .d-pad th {
