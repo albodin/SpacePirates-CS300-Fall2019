@@ -33,6 +33,9 @@ let player = {
     position: {x: 12, y: 12}
 }
 
+//Read settings in Local Storage
+readSettings()
+
 // Initializes the entire map grid to a default object.
 map.data = Array(map.bounds.x)
     .fill().map(() => Array(map.bounds.y)

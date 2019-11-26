@@ -4,6 +4,9 @@
 
 <!--Global variables-->
     <script src="globals.js"></script>
+	
+<!--Javascript settings-->
+    <script src="settings.js"></script>
 
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -20,24 +23,24 @@
     <form name="UI">
       <p>
         Start Location: X
-        <input type="text" id="xVal" name="xValue" size="4" /> Y
-        <input type="text" id="yVal" name="yValue" size="4" />
+        <input type="text" id="startX" name="xValue" size="4" /> Y
+        <input type="text" id="startY" name="yValue" size="4" />
       </p>
       <p>Energy <input type="text"  id="energy" name="energy" size="4" /></p>
-      <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" />%</p>
+      <p>Supplies <input type="text" id ="supplies" name="supplies" size="4" /></p>
 	  <p>Credits <input type="text" id ="credits" name="credits" size="4" /></p>
       <p>Play mode:
-	    <input type="radio" name="mode" value="regular"> Regular play &nbsp;
-	    <input type="radio" name="mode" value="test"> Never dies
+	    <input type="radio" id="regular" name="mode" value="regular"> Regular play &nbsp;
+	    <input type="radio" id="test" name="mode" value="test"> Never dies
 	  </p>
 	  <p>Wormhole behavior:
-	    <input type="radio" name="wormhole" value="fixed"> Fixed &nbsp;
-	    <input type="radio" name="wormhole" value="random"> Random
+	    <input type="radio" id="fixed" name="wormhole" value="fixed"> Fixed &nbsp;
+	    <input type="radio" id="random" name="wormhole" value="random"> Random
 	  </p>
 	  <p>
         Game size: Width
-        <input type="text" id="xVal" name="xValue" size="4" /> Height
-        <input type="text" id="yVal" name="yValue" size="4" />
+        <input type="text" id="xMap" name="xValue" size="4" /> Height
+        <input type="text" id="yMap" name="yValue" size="4" />
       </p>
 	  <input
           type="button"
@@ -49,41 +52,13 @@
           value="Save"
           onclick="save()"
       />
+	  <input
+          type="button"
+          value="Reset to default settings"
+          onclick="resetSettings()"
+      />
       
     </form>
 
-	<script>
-	function save() {
-	  //var requestURL = "settings.json";
-	//  var request = new XMLHttpRequest();
-	//  request.open("GET", requestURL);
-	//  request.responseType = "json";
-	//  request.send();
-	//  var setting = request.response;
-	//  var fs = require("fs");
-	//  var fileName = "./settings.json";
-	//  var file = require(fileName);
-	//  setting["locationX"] = document.getElementById("xVal").value;
-	//  setting["locationY"] = document.getElementById("yVal").value;
-	//  file.energy = document.getElementById("energy").value;
-	//  file.supplies = document.getElementById("supplies").value;
-	//  fs.writeFile(fileName, JSON.stringify(setting), function (err) {
-	//  if (err) return console.log(err);
-	//	console.log(JSON.stringify(setting));
-	//	console.log("writing to " + fileName);
-	  //});
-	  fs.readFile('settings.json', 'utf8', function readFileCallback(err, data){
-      if (err){
-        console.log(err);
-      } else {
-      obj = JSON.parse(data); //now it an object
-      obj.locationX = document.getElementById("xVal").value; //add some data
-	  obj.locationY = document.getElementById("yVal").value;
-      json = JSON.stringify(obj); //convert it back to json
-      fs.writeFile('settings.json', json, 'utf8', callback); // write it back 
-	  }});
-	}
-	</script>
-	
   </body>
 </html>
