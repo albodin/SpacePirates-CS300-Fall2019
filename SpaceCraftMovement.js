@@ -121,7 +121,27 @@ function movement(angle, distance) {
         //update the Energy after a player makes a move
         decrementEnergy(energyCost);  
         //Set the points to visible with a radius of 1 around the player
-        setVisible(1);
+        setVisible(1)
+
+        //check to see if you ran into an artifact, if you did, the movement loop will stop and
+        //this statement will be true.
+        if(checkForArtifact())
+        {
+            //you won the game, do not decrement the supplies
+            if(gameOver){
+                gameOver = false;
+                return;
+            }
+
+            //you hit an artifact that wasn't koka-kola, stop moving and decrement supplies.
+            else{
+                decrementSupplies(2);
+                console.log(energy)
+                console.log(player.position)
+                return;
+            }
+        }
+
         console.log(energy)
         console.log(player.position)
     }
