@@ -18,9 +18,9 @@ function readSettingsFromLocalStorage() {
 	if (localStorage.isWormholeFixed) {
       isWormholeActive = localStorage.getItem("isWormholeFixed");
     }
-	if (localStorage.map) {
-      map = localStorage.getItem("map");
-    }
+	//if (localStorage.map) {
+    //  map = localStorage.getItem("map");
+    //}
   }
 }
 
