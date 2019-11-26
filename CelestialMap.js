@@ -343,6 +343,18 @@ const draw = {
         ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
         ctx.fill()
     },
+    kocaKola(position) {
+        let { ctx } = this
+        let pos = camera.transform.world_to_camera(position)
+        if (!camera.withinBounds(pos))
+            return;
+        let {x, y} = pos
+        let main_size = 0.25
+        ctx.fillStyle = "brown"
+        ctx.beginPath()
+        ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
+        ctx.fill()
+    },
     map() {
         this.border()
         for (let x = 0; x < map.bounds.x; x += 1) {
@@ -364,7 +376,7 @@ const draw = {
                         case CA__SPACE_STATION: this.spaceStation({x, y}); break
                         case CA__ABANDONED_FREIGHTER: throw new Error('not implemented')
                         case CA__MINI_MART: throw new Error('not implemented')
-                        case CA__KOKA_KOLA: throw new Error('not implemented')
+                        case CA__KOKA_KOLA: this.kocaKola({x,y}); break;
                     }
             }
         }
