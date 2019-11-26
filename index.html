@@ -5,6 +5,17 @@
   <! -- // // *** // *** JavaScript functions loaded as include files // *** Allows each team member to own their own
     code // *** // -->
 
+<!--
+// *** User Story: SH-2	Game Configuration for Development	Priority: HIGH
+// *** Story: As a developer, I want to customize my game play by selecting 
+// *** initial values for the state variables: location, energy, supplies, 
+// *** credits, fixed wormhole behavior random wormhole behavior, regular 
+// *** play/never dies, MAX game size so I can avoid setting these values 
+// *** through normal game play.
+-->
+
+    <script src="settings.js"></script>
+
     <!--
 // *** User Story: SH-3	Running out of energy	Priority: HIGH
 // *** Story: As a player, I want to be notified when I run out of
@@ -58,7 +69,7 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body onload="readSettings()">
+<body>
   <ul>
     <li><a class="active" href="#home">Home</a></li>
     <li><a href="settings.html">Settings</a></li>
