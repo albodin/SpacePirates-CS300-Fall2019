@@ -4,8 +4,8 @@ function checkSupplies() {
          alert("You ran out of supplies. Game over");
          restart();
       }
-      else
-         alert("You ran out of supplies");
+      //else
+         //alert("You ran out of supplies");
    }    
 }
 

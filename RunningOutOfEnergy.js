@@ -9,8 +9,8 @@ function checkEnergy() {
          restart();
       }
 
-      else //not regular game mode
-          alert("You ran out of energy");
+      //else //not regular game mode
+          //alert("You ran out of energy. However, you're in test mode, so you won't never die!");
 
    }
    console.log(isRegularPlay)
