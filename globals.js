@@ -13,7 +13,8 @@ var supplies = 0;
 var energy = 0;
 var isRegularPlay = true;
 var hasEnhancedSensors = false;
-var isWormholeActive = true; 
+var isWormholeActive = true;
+var gameOver = false;
 
 //start variables, what the game resets too upon losing
 var startEnergy = 1000;
