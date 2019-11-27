@@ -18,9 +18,10 @@ function readSettingsFromLocalStorage() {
 	if (localStorage.isWormholeFixed) {
       isWormholeActive = (localStorage.getItem("isWormholeFixed") === "true");
     }
-	//if (localStorage.map) {
-    //  map = localStorage.getItem("map");
-    //}
+	if (localStorage.mapx && localStorage.mapx) {
+	  map.bounds.x = parseInt(localStorage.mapx);
+	  map.bounds.y = parseInt(localStorage.mapy);
+    }
   }
 }
 
@@ -31,20 +32,22 @@ function resetSettings() {
   localStorage.removeItem("startSupplies");
   localStorage.removeItem("isRegularPlay");
   localStorage.removeItem("isWormholeFixed");
+  localStorage.removeItem("mapx");
+  localStorage.removeItem("mapy");
   loadSettings();
 }
 
 function saveSettings() {
   if (typeof(Storage) !== "undefined") {
-	if (document.getElementById("startX").value !== "")
+	if (document.getElementById("startX").value != "")
 	  localStorage.setItem("locationx", document.getElementById("startX").value);
-	if (document.getElementById("startY").value !== "")
+	if (document.getElementById("startY").value != "")
 	  localStorage.setItem("locationy", document.getElementById("startY").value);
-	if (document.getElementById("energy").value !== "")
+	if (document.getElementById("energy").value != "")
 	  localStorage.setItem("startEnergy", document.getElementById("energy").value);
-	if (document.getElementById("supplies").value !== "")
+	if (document.getElementById("supplies").value != "")
 	  localStorage.setItem("startSupplies", document.getElementById("supplies").value);
-	if (document.getElementById("credits").value !== "")
+	if (document.getElementById("credits").value != "")
 	  localStorage.setItem("startCredits", document.getElementById("credits").value);
 	if (document.getElementById("regular").checked)
 	  localStorage.setItem("isRegularPlay", true);
@@ -54,8 +57,11 @@ function saveSettings() {
 	  localStorage.setItem("isWormholeFixed", false);
 	if (document.getElementById("random").checked)
 	  localStorage.setItem("isWormholeFixed", true);
-	if (document.getElementById("xMap").value !== "" && document.getElementById("yMap").value !== "")
-	  localStorage.setItem("map", "{ bounds: { x: " + document.getElementById("xMap").value + ", y: " + document.getElementById("yMap").value +"} }");
+	if (document.getElementById("xMap").value != "" && document.getElementById("yMap").value != ""){
+	  localStorage.setItem("mapx", document.getElementById("xMap").value);
+	  localStorage.setItem("mapy", document.getElementById("yMap").value);
+	//  localStorage.setItem("map", "{ bounds: { x: " + document.getElementById("xMap").value + ", y: " + document.getElementById("yMap").value +"} }");
+	}
   }
   else {
 	alert("Sorry, your browser does not support Web Storage...");
@@ -98,13 +104,17 @@ function loadSettings() {
 	  document.getElementById("random").checked = true;
   } 
   else {
-	if (isWormholeActive = true)
+	if (isWormholeActive = false)
 	  document.getElementById("fixed").checked = true;
 	else
 		document.getElementById("random").checked = true;
   }
+  if (localStorage.mapx && localStorage.mapx) {
+	document.getElementById("xMap").value = localStorage.mapx;
+	document.getElementById("yMap").value = localStorage.mapy;
+  }
+  else {
+	document.getElementById("xMap").value = map.bounds.x;
+	document.getElementById("yMap").value = map.bounds.y;
+  }
 }
-
-//let player = {
-//    position: {x: 12, y: 12}
-//}
