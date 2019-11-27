@@ -89,8 +89,8 @@
     <li><a href="#home" onclick="showSaveSelection()">Save</a></li>
 
     <li>
-      <div class="custom-input">
-          <br/><input id="saveText" placeholder="Enter save name"/>
+      <div class="custom-input" id="custom-input">
+          <br/><input type="text" id="saveText" placeholder="Enter save name" onkeypress="saveTextKeyPress(event, this.value)"/>
       </div>
     </li>
     
