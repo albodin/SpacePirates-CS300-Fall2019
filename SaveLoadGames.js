@@ -1,5 +1,21 @@
+function saveTextKeyPress(event, value) {
+    if (event.key === "Enter") {
+        if (value !== "")
+            saveGame(value);
+        var save_input = document.getElementById("custom-input");
+        save_input.style.visibility = "hidden";
+        save_input.style.display = "none";
+    }
+}
+
 function showSaveSelection() {
-    saveGame("TempName");
+    var save_input = document.getElementById("custom-input");
+    var save_text = document.getElementById("saveText");
+
+    save_input.style.visibility = "visible";
+    save_input.style.display = "block";
+
+    save_text.value = "";
 }
 
 function saveGame(saveName) {
@@ -21,7 +37,35 @@ function saveGame(saveName) {
     toStore.push(isWormholeActive);
     toStore.push(player);
     toStore.push(map);
-    localStorage.setItem("Save_TempName", JSON.stringify(toStore));
+
+    var saved = false;
+    while (!saved) {
+        try {
+            localStorage.setItem(saveNameFull, JSON.stringify(toStore));
+            saved = true;
+        } catch (error) {
+            //There was an error saving, loop through local storage and
+            //try to remove an old save, if no save found cancel saving
+            //and alert the player
+            if (!confirm("Storage full, do you wish to delete a random save?")) {
+                //User doesn't wish to delete a save
+                return;
+            }
+            var saveFound = false;
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                if (key.startsWith("Save_")) {
+                    localStorage.removeItem(key);
+                    i = localStorage.length;
+                    saveFound = true;
+                }
+            }
+            if (!saveFound) {
+                saved = true;//set saved to true to exit loop
+                alert("Save failed: Storage full and no old save found")
+            }
+        }
+    }
 }
 
 function addLoadSelectOption(element, value, innerHTML) {
