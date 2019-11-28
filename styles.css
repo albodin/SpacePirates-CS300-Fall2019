@@ -182,7 +182,8 @@ li a:hover {
     padding-right: 16px;
     padding-bottom: 14px;
     padding-top: 13px;
-    height: 52;
+    height: 52px;
+    width: 128.2px;
     text-align: center;
     background: transparent;
     font-size: 16px;
@@ -200,7 +201,7 @@ li a:hover {
     color: white; 
     padding-left: 16px;
     padding-right: 16px;
-    height: 52;
+    height: 52px;
 }
 
 .custom-input:hover {
