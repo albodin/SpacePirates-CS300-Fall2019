@@ -163,3 +163,57 @@ li a:hover {
 .full-width input {
     min-width: 100%;
 }
+
+.custom-select {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+.custom-select:hover {
+    background-color: #111;
+    cursor: text;
+}
+
+.custom-select select{
+    font-family: 'Space Mono', monospace;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 14px;
+    padding-top: 13px;
+    height: 52px;
+    width: 128.2px;
+    text-align: center;
+    background: transparent;
+    font-size: 16px;
+    border: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+    color: white;
+}
+
+.custom-input {
+    display: none;
+    visibility: hidden;
+    text-align: left;
+    text-decoration: none;
+    color: white; 
+    padding-left: 16px;
+    padding-right: 16px;
+    height: 52px;
+}
+
+.custom-input:hover {
+    background-color: #111;
+}
+
+.custom-input input {
+    position: relative;
+    bottom: 13px;
+    border: 2px solid #111;
+    font-size: 16px;
+    color: white;
+    text-shadow: none;
+    width: 100%;
+}

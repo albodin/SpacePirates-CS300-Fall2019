@@ -67,6 +67,16 @@
 
 
     <link rel="stylesheet" href="styles.css" />
+
+    <!--
+// *** User Story: SH-9	Nameable Persistent State	Priority: MODERATE
+// *** Story: As a player, I want to be able to name and save an instance
+// *** of my current game so I can select it from other saved instances and
+// *** reload it to continue where I left off later.
+-->
+<script src="SaveLoadGames.js"></script>
+
+
 </head>
 
 <body>
@@ -74,6 +84,23 @@
     <li><a class="active" href="#home">Home</a></li>
     <li><a href="settings.html">Settings</a></li>
     <li><a href="#about">About</a></li>
+
+    <li>
+      <div class="custom-select" id="custom-select">
+      <select id="ourSelect" onclick="showLoadSelection()">
+        <option value="Default">Load Save</option>
+      </select>
+    </div>
+    </li>
+
+    <li><a href="#home" onclick="showSaveInput()">Save</a></li>
+
+    <li>
+      <div class="custom-input" id="custom-input">
+          <br/><input type="text" id="saveText" placeholder="Enter save name" onkeypress="saveTextKeyPress(event, this.value)"/>
+      </div>
+    </li>
+    
   </ul>
   <div class="ui-panel">
       <form name="UI">
