@@ -66,7 +66,7 @@ function movement(angle, distance) {
     for (var i = 0; i < distance; ++i) {
         //  Down
         if (angle === 1) {
-            if (player.position.y + 1 > map.bounds.y) {
+            if (player.position.y + 1 >= map.bounds.y) {
                 if (isWormholeActive) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
@@ -79,7 +79,7 @@ function movement(angle, distance) {
         }
         // Right
         else if (angle === 2) {
-            if (player.position.x + 1 > map.bounds.x) {
+            if (player.position.x + 1 >= map.bounds.x) {
                 if (isWormholeActive) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
@@ -97,7 +97,7 @@ function movement(angle, distance) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
                 } else {
-                    player.position.y = map.bounds.y
+                    player.position.y = map.bounds.y - 1;
                 }
             } else {
                 player.position.y--;
@@ -110,7 +110,7 @@ function movement(angle, distance) {
                     player.position.x = getRandomInt(map.bounds.x, 0)
                     player.position.y = getRandomInt(map.bounds.y, 0)
                 } else {
-                    player.position.x = map.bounds.x
+                    player.position.x = map.bounds.x - 1;
                 }
             } else {
                 player.position.x--;
