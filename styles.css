@@ -113,6 +113,10 @@ input[type=number] {
 
 canvas {
     background: black;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
 .celestial-map-panel {

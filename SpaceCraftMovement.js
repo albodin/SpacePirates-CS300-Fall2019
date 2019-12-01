@@ -136,14 +136,14 @@ function movement(angle, distance) {
             //you hit an artifact that wasn't koka-kola, stop moving and decrement supplies.
             else{
                 decrementSupplies(2);
-                console.log(energy)
-                console.log(player.position)
+                // console.log(energy)
+                // console.log(player.position)
                 return;
             }
         }
 
-        console.log(energy)
-        console.log(player.position)
+        // console.log(energy)
+        // console.log(player.position)
     }
     decrementSupplies(2);
 };

@@ -224,39 +224,20 @@ const draw = {
         this.ctx = CANVAS.getContext('2d')
         this.ctx.lineWidth = this.lineWidth = LINEWIDTH * camera.zoom
         this.ctx.clearRect(0, 0, width, height)
+        this.ctx.webkitImageSmoothingEnabled =
+            this.ctx.imageSmoothingEnabled = false
     },
-    player(position) {
+    sprite(spriteName, position) {
+        let { ctx } = this
         let pos = camera.transform.world_to_camera(position)
+        if (SPRITES.player.img == null)
+            return;
         if (!camera.withinBounds(pos))
             return;
-        let {x, y} = pos
-        let cockpitSize = 0.3
-        let shipSize = 0.6
-        let { ctx, lineWidth } = this
-        // ship
-        ctx.strokeStyle = "#470c05"
-        ctx.fillStyle = "#8a1f12"
-        // outline
-        ctx.beginPath()
-        ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
-        ctx.fill()
-        // fill
-        ctx.beginPath()
-        ctx.arc(x, y, shipSize * camera.zoom, 0, 2 * Math.PI)
-        ctx.stroke()
-        // inner line
-        ctx.beginPath()
-        ctx.arc(x, y, (cockpitSize * camera.zoom) + lineWidth, 0, 2 * Math.PI)
-        ctx.stroke()
-        // cockpit
-        ctx.strokeStyle = "#5e65b8"
-        ctx.fillStyle = "#a8aeed"
-        ctx.beginPath()
-        ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
-        ctx.fill()
-        ctx.beginPath()
-        ctx.arc(x, y, cockpitSize * camera.zoom, 0, 2 * Math.PI)
-        ctx.stroke()
+        let { zoom } = camera
+        let offset = zoom / 2
+        let x = pos.x - offset, y = pos.y - offset
+        ctx.drawImage(SPRITES[spriteName].img, x, y, zoom, zoom)
     },
     border() {
         let { ctx } = this
@@ -277,84 +258,26 @@ const draw = {
         let pos = camera.transform.world_to_camera(position)
         if (!camera.withinBounds(pos))
             return;
-        // "checker"
+        // checkerboard-like pattern
         let size = (({x,y}) => {
-            return x % 2 == 1 && y % 2 == 0 || x % 2 == 0 && y % 2 == 1 ?
-                0.02 : 0.04
+            return x % 2 == 1 && y % 2 == 0 ||
+                x % 2 == 0 && y % 2 == 1 ?
+                0.02 :
+                0.04
         })(position)
-
         ctx.fillStyle = "#fcf4dc"
-        // "checkerboard" larger and smaller stars
         let {x, y} = pos
         ctx.beginPath()
         ctx.arc(x, y, size * camera.zoom, 0, 2 * Math.PI)
         ctx.fill()
     },
-    asteroid(position) {
-        let v = util.vector2math
-        let { ctx } = this
-        let pos = camera.transform.world_to_camera(position)
-        if (!camera.withinBounds(pos))
-            return;
-        let {x, y} = pos
-        let main_size = 0.2 * camera.zoom
-        let detail_size = 0.1 * camera.zoom
-        ctx.fillStyle = "#615942"
-        ctx.beginPath()
-        ctx.arc(x, y, main_size, 0, 2 * Math.PI)
-        ctx.fill()
-
-        ctx.beginPath()
-        ctx.arc(x, y, main_size, 0, 2 * Math.PI)
-        ctx.fill()
-
-        for (let i = 0; i < 4; ++i) {
-            let offset = {
-                x: Math.random(),
-                y: Math.random(),
-            }
-            v.mul(offset, detail_size)
-        }
-    },
-    planet(position, color) {
-        let { ctx } = this
-        let pos = camera.transform.world_to_camera(position)
-        if (!camera.withinBounds(pos))
-            return;
-        let {x, y} = pos
-        let main_size = 0.7
-        if (color)
-            ctx.fillStyle = color
-        else
-            ctx.fillStyle = "#2A258E"
-        ctx.beginPath()
-        ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
-        ctx.fill()
-    },
-    spaceStation(position) {
-        let { ctx } = this
-        let pos = camera.transform.world_to_camera(position)
-        if (!camera.withinBounds(pos))
-            return;
-        let {x, y} = pos
-        let main_size = 0.25
-        ctx.fillStyle = "#888888"
-        ctx.beginPath()
-        ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
-        ctx.fill()
-    },
-    kocaKola(position) {
-        let { ctx } = this
-        let pos = camera.transform.world_to_camera(position)
-        if (!camera.withinBounds(pos))
-            return;
-        let {x, y} = pos
-        let main_size = 0.25
-        ctx.fillStyle = "brown"
-        ctx.beginPath()
-        ctx.arc(x, y, main_size * camera.zoom, 0, 2 * Math.PI)
-        ctx.fill()
-    },
+    asteroid(position) { this.sprite('asteroid', position) },
+    planet(position) { this.sprite('planet', position) },
+    // todo celeron/xenon/ryzen
+    spaceStation(position) { this.sprite('spaceStation', position) },
+    kocaKola(position) { this.sprite('kokaKola', position) },
+    freighter(position) { this.sprite('freighter', position) },
+    miniMart(position) { this.sprite('miniMart', position) },
     map() {
         this.border()
         for (let x = 0; x < map.bounds.x; x += 1) {
@@ -362,21 +285,24 @@ const draw = {
                 let tile = map.data[x][y]
                 if (!tile.visible)
                     continue;
-                let screenPos = camera.transform.world_to_camera({x, y})
-                if (!camera.withinBounds(screenPos)) continue
+                let pos = {x, y}
+                let screenPos = camera.transform.world_to_camera(pos)
+                if (!camera.withinBounds(screenPos))
+                    continue
                 if (!tile.artifact)
-                    this.blank({x, y})
+                    this.blank(pos)
                 else if (!tile.artifact.type)
                     throw new Error('Map position contains artifact object missing "type" property')
                 else
                     switch (tile.artifact.type) {
                         // TODO the rest
-                        case CA__ASTEROID: this.asteroid({x, y}); break
-                        case CA__PLANET: this.planet({x, y}, tile.artifact.color); break
-                        case CA__SPACE_STATION: this.spaceStation({x, y}); break
-                        case CA__ABANDONED_FREIGHTER: throw new Error('not implemented')
-                        case CA__MINI_MART: throw new Error('not implemented')
-                        case CA__KOKA_KOLA: this.kocaKola({x,y}); break;
+                        case CA__ASTEROID: this.asteroid(pos); break
+                        // case CA__PLANET: this.planet(pos, tile.artifact.color); break
+                        case CA__PLANET: this.planet(pos); break
+                        case CA__SPACE_STATION: this.spaceStation(pos); break
+                        case CA__ABANDONED_FREIGHTER: this.freighter(pos); break
+                        case CA__MINI_MART: this.miniMart(pos); break;
+                        case CA__KOKA_KOLA: this.kocaKola(pos); break;
                     }
             }
         }
@@ -391,7 +317,8 @@ let celestialMap = {
         let redraw = () => {
             draw.init()
             draw.map()
-            draw.player(player.position)
+            // draw.player(player.position)
+            draw.sprite('player', player.position)
             // writeInfo()
 
             // Debug by printing to DOM in real time

@@ -13,7 +13,7 @@ function checkEnergy() {
           //alert("You ran out of energy. However, you're in test mode, so you won't never die!");
 
    }
-   console.log(isRegularPlay)
+   // console.log(isRegularPlay)
 }
 
 //Reduces energy by 1
