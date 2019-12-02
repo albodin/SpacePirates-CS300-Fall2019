@@ -15,6 +15,7 @@ var isRegularPlay = true;
 var hasEnhancedSensors = false;
 var isWormholeActive = true; 
 var gameOver = false;
+var displayCelestial = false;
 
 //start variables, what the game resets too upon losing
 var startEnergy = 1000;

@@ -18,6 +18,9 @@ function readSettingsFromLocalStorage() {
 	if (localStorage.isWormholeFixed) {
       isWormholeActive = (localStorage.getItem("isWormholeFixed") === "true");
     }
+	if (localStorage.displayCelestial) {
+      displayCelestial = (localStorage.getItem("displayCelestial") === "true");
+    }
 	if (localStorage.mapx && localStorage.mapx) {
 	  map.bounds.x = parseInt(localStorage.mapx);
 	  map.bounds.y = parseInt(localStorage.mapy);
@@ -34,6 +37,7 @@ function resetSettings() {
   localStorage.removeItem("isWormholeFixed");
   localStorage.removeItem("mapx");
   localStorage.removeItem("mapy");
+  localStorage.removeItem("displayCelestial");
   loadSettings();
 }
 
@@ -57,6 +61,10 @@ function saveSettings() {
 	  localStorage.setItem("isWormholeFixed", false);
 	if (document.getElementById("random").checked)
 	  localStorage.setItem("isWormholeFixed", true);
+    if (document.getElementById("display").checked)
+	  localStorage.setItem("displayCelestial", true);
+	if (document.getElementById("hidden").checked)
+	  localStorage.setItem("displayCelestial", false);
 	if (document.getElementById("xMap").value != "" && document.getElementById("yMap").value != ""){
 	  localStorage.setItem("mapx", document.getElementById("xMap").value);
 	  localStorage.setItem("mapy", document.getElementById("yMap").value);
@@ -92,7 +100,7 @@ function loadSettings() {
 	  document.getElementById("test").checked = true;
   } 
   else {
-	if (isRegularPlay = true)
+	if (isRegularPlay == true)
 	  document.getElementById("regular").checked = true;
 	else 
 	  document.getElementById("test").checked = true;
@@ -104,10 +112,22 @@ function loadSettings() {
 	  document.getElementById("random").checked = true;
   } 
   else {
-	if (isWormholeActive = false)
+	if (isWormholeActive == false)
 	  document.getElementById("fixed").checked = true;
 	else
 		document.getElementById("random").checked = true;
+  }
+  if (localStorage.displayCelestial) {
+	if (localStorage.getItem("displayCelestial") == "true")
+	  document.getElementById("display").checked = true;
+    else
+	  document.getElementById("hidden").checked = true;
+  } 
+  else {
+	if (displayCelestial == false)
+	  document.getElementById("hidden").checked = true;
+	else
+		document.getElementById("display").checked = true;
   }
   if (localStorage.mapx && localStorage.mapx) {
 	document.getElementById("xMap").value = localStorage.mapx;
