@@ -10,11 +10,24 @@
     <script src="settings.js"></script>
 
     <link rel="stylesheet" href="styles.css" />
+    <script src="artifactPlacementFuncts.js"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    "
 </head>
 
 <body>
     <ul>
-        <li><a class="active" href="settings.html">Back</li>
+        <li><a class="active" href="settings.html">Back</a></li>
         <li><a href="index.html">Gamepage</a></li>
     </ul>
     <h1 class="title">SpaceHunt</h1>
@@ -29,7 +42,7 @@
                     Asteroid
                 </td>
                 <td align="left">
-                    <input class="artifact_item" type="text" id="asteroid" name="asteroid" />
+                    <input class="artifact_item" type="text" id="asteroid" name="asteroid" onchange="getArtifactCoord()" />
                 </td>
             </tr>
             <tr>
@@ -37,7 +50,7 @@
                     Planet
                 </td>
                 <td align="left">
-                    <input class="artifact_item" type="text" id="planet" name="planet" />
+                    <input class="artifact_item" type="text" id="planet" name="planet" onchange="getArtifactCoord()"/>
                 </td>
             </tr>
             <tr>
@@ -45,23 +58,24 @@
                     Space Station
                 </td>
                 <td align="left">
-                    <input class="artifact_item" type="text" id="station" name="station" />
+                    <input class="artifact_item" type="text" id="station" name="station" onchange="getArtifactCoord()" />
                 </td>
             <tr>
                 <td align="right">
                     Koka Kola
                 </td>
                 <td>
-                    <input class="artifact_item" type="text" id="kola" name="kola" />
+                    <input class="artifact_item" type="text" id="kola" name="kola" onchange="getArtifactCoord()"/>
                 </td>
             </tr>
             <tr>
                 <td align="right">Mini Mart</td>
-                <td> <input class="artifact_item" type="text" id="mart" name="mart" /></td>
+                <td> <input class="artifact_item" type="text" id="mart" name="mart" onchange="getArtifactCoord()"/></td>
             </tr>
             </tr>
         </table>
     </form>
+    <a class="active" href="settings.html">Back to settings</a>
 </body>
 
 </html>

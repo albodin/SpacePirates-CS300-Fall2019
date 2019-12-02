@@ -23,19 +23,22 @@ var coordinates = {
 
 function getArtifactCoord(){
     asteroidCoord = document.getElementById("asteroid").value
+    console.log(asteroidCoord)
     coordinates["asteroid"] = strToObj(asteroidCoord)
 
     planetCoord = document.getElementById("planet").value
-    coordinates["planet"] = strToObj(asteroidCoord)
+    coordinates["planet"] = strToObj(planetCoord)
 
     stationCoord = document.getElementById("station").value
-    coordinates["station"] = strToObj(asteroidCoord)
+    coordinates["station"] = strToObj(stationCoord)
 
     kolaCoord = document.getElementById("kola").value
-    coordinates["kola"] = strToObj(asteroidCoord)
+    coordinates["kola"] = strToObj(kolaCoord)
 
     martCoord = document.getElementById("mart").value
-    coordinates["mart"] = strToObj(asteroidCoord)
+    coordinates["mart"] = strToObj(martCoord)
+
+    console.log(coordinates)
 
 }
 
