@@ -10,6 +10,7 @@ function moveSpacecraft(angle, distance) {
 
 }
 
+// Gets random int, used for wormhole
 const getRandomInt = (max, min) => {
     return random = Math.floor(Math.random() * max + min)
 }
@@ -24,37 +25,6 @@ const checkWormHole = () => {
         return false
     }
 }
-
-/*
-const outOfBounds = (newPos) => {
-    if (newPos > map.bounds.x || player.position.x < 0 || player.position.y > map.bounds.y || player.position.y < 0) {
-        //if wormhole is active, redirect player to random position
-        if (isWormholeActive) {
-            player.position.x = getRandomInt(map.bounds.x, 0)
-            player.position.x = getRandomInt(map.bounds.y, 0)
-        }
-        //If player goes out of bounds downwards, redirect X to 0
-        if (player.position.x > map.bounds.x) {
-            player.position.x = 0
-        }
-        //If player goes out of bounds upwards, redirect X to x boundry 
-        if (player.position.x < 0) {
-            player.position.x = map.bounds.x
-        }
-        //If player goes out of bounds righward, redirect y to 0
-        if (player.position.y > map.bounds.y) {
-            player.position.y = 0
-        }
-        //If player goes out of bounds leftward, redirect y to y boundry
-        if (player.position.y < 0) {
-            player.position.y = map.bounds.y
-        }
-
-    } else {
-        return false
-    }
-}
-*/
 
 
 function movement(angle, distance) {
