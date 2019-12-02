@@ -30,10 +30,10 @@ function placeArtifacts() {
             color: '#999922',
         }
     }
-    updateGazetteer()
+    if (displayCelestial) gazetteer()
 }
 
-function updateGazetteer() {
+function gazetteer() {
     artifacts = []
     for (x in map.data)
         for (y in map.data[x])
