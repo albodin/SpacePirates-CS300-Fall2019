@@ -34,8 +34,8 @@ function getArtifactCoord() {
     martCoord = document.getElementById("mart").value
     coordinates["mart"] = strToObj(martCoord)
 
-    customArtifactPlacement()
     localStorage.setItem('artifactCoords', JSON.stringify(coordinates));
+    //customArtifactPlacement()
     console.log(coordinates)
 
 
@@ -61,18 +61,20 @@ function strToObj(str) {
 //place artifacts based on custom settinfs
 function customArtifactPlacement() {
     try {
-        if (coordinates["asteroid"]) {
-            coordinates["asteroid"].forEach(function (obj) {
+        if (getArtifactCoords["asteroid"]) {
+            getArtifactCoords["asteroid"].forEach(function (obj) {
+                console.log(obj.x, obj.y)
                 map.data[obj.x][obj.y].artifact = { type: CA__ASTEROID };
             })
         }
     } catch (error) {
+        console.log(error)
         console.log("error in asteroid")
     }
 
     try {
-        if (coordinates["planet"]) {
-            coordinates["planet"].forEach(function (obj) {
+        if (getArtifactCoords["planet"]) {
+            getArtifactCoords["planet"].forEach(function (obj) {
                 map.data[obj.x][obj.y].artifact = { type: CA__PLANET };
             })
         }
@@ -80,9 +82,9 @@ function customArtifactPlacement() {
         console.log("error in planet")
     }
     try {
-        if (coordinates["station"]) {
-            coordinates["station"].forEach(function (obj) {
-                map.data[obj.x][obj.y].artifact = { CA__SPACE_STATION };
+        if (getArtifactCoords["station"]) {
+            getArtifactCoords["station"].forEach(function (obj) {
+                map.data[obj.x][obj.y].artifact = { type: CA__SPACE_STATION };
             })
         }
     } catch (error) {
@@ -91,9 +93,9 @@ function customArtifactPlacement() {
     }
 
     try {
-        if (coordinates["kola"]) {
-            coordinates["kola"].forEach(function (obj) {
-                map.data[obj.x][obj.y].artifact = { CA__KOKA_KOLA };
+        if (getArtifactCoords["kola"]) {
+            getArtifactCoords["kola"].forEach(function (obj) {
+                map.data[obj.x][obj.y].artifact = { type: CA__KOKA_KOLA };
             })
         }
     } catch (error) {
@@ -101,8 +103,8 @@ function customArtifactPlacement() {
 
     }
     try {
-        if (coordinates["mart"]) {
-            coordinates["mart"].forEach(function (obj) {
+        if (getArtifactCoords["mart"]) {
+            getArtifactCoords["mart"].forEach(function (obj) {
                 map.data[obj.x][obj.y].artifact = { type: CA__MINI_MART };
             })
         }

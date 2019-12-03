@@ -31,6 +31,8 @@ function placeArtifacts() {
             color: '#999922',
         }
     }
+    customArtifactPlacement()
+
     if (displayCelestial) gazetteer()
 }
 
