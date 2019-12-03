@@ -12,6 +12,9 @@ function readSettingsFromLocalStorage() {
 	if (localStorage.startSupplies) {
       startSupplies = parseInt(localStorage.getItem("startSupplies"));
     }
+	if (localStorage.startCredits) {
+      startCredits = parseInt(localStorage.getItem("startCredits"));
+    }
 	if (localStorage.isRegularPlay) {
       isRegularPlay = (localStorage.getItem("isRegularPlay") === "true");
     }
@@ -33,6 +36,7 @@ function resetSettings() {
   localStorage.removeItem("locationy");
   localStorage.removeItem("startEnergy");
   localStorage.removeItem("startSupplies");
+  localStorage.removeItem("startCredits");
   localStorage.removeItem("isRegularPlay");
   localStorage.removeItem("isWormholeFixed");
   localStorage.removeItem("mapx");
@@ -93,6 +97,10 @@ function loadSettings() {
 	document.getElementById("supplies").value = localStorage.getItem("startSupplies");
   else
     document.getElementById("supplies").value = startSupplies;
+  if (localStorage.startCredits)
+	document.getElementById("credits").value = localStorage.getItem("startCredits");
+  else
+    document.getElementById("credits").value = startCredits;
   if (localStorage.isRegularPlay) {
 	if (localStorage.getItem("isRegularPlay") == "true")
 	  document.getElementById("regular").checked = true;
