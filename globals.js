@@ -35,7 +35,14 @@ var map = {
         y: 126
     },
 }
-var previousPlayerPosition = {x:0,y:0}
+// var previousPlayerPosition = {x:0,y:0}
+//coordinates for artifact placement
+
+try {
+    var getArtifactCoords =  JSON.parse(localStorage.getItem('artifactCoords'));
+} catch (error) {
+    console.log('Artifact coords cant be read')
+}
 
 // suggestion - Matt
 let player = {

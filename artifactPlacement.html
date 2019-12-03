@@ -11,18 +11,6 @@
 
     <link rel="stylesheet" href="styles.css" />
     <script src="artifactPlacementFuncts.js"></script>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    "
 </head>
 
 <body>
@@ -42,7 +30,7 @@
                     Asteroid
                 </td>
                 <td align="left">
-                    <input class="artifact_item" type="text" id="asteroid" name="asteroid" onchange="getArtifactCoord()" />
+                    <input class="artifact_item" type="text" id="asteroid" name="asteroid" />
                 </td>
             </tr>
             <tr>
@@ -50,7 +38,7 @@
                     Planet
                 </td>
                 <td align="left">
-                    <input class="artifact_item" type="text" id="planet" name="planet" onchange="getArtifactCoord()"/>
+                    <input class="artifact_item" type="text" id="planet" name="planet" />
                 </td>
             </tr>
             <tr>
@@ -58,24 +46,25 @@
                     Space Station
                 </td>
                 <td align="left">
-                    <input class="artifact_item" type="text" id="station" name="station" onchange="getArtifactCoord()" />
+                    <input class="artifact_item" type="text" id="station" name="station" />
                 </td>
             <tr>
                 <td align="right">
                     Koka Kola
                 </td>
                 <td>
-                    <input class="artifact_item" type="text" id="kola" name="kola" onchange="getArtifactCoord()"/>
+                    <input class="artifact_item" type="text" id="kola" name="kola" />
                 </td>
             </tr>
             <tr>
                 <td align="right">Mini Mart</td>
-                <td> <input class="artifact_item" type="text" id="mart" name="mart" onchange="getArtifactCoord()"/></td>
+                <td> <input class="artifact_item" type="text" id="mart" name="mart"/></td>
             </tr>
             </tr>
         </table>
     </form>
-    <a class="active" href="settings.html">Back to settings</a>
+    <a class="active" href="settings.html" onclick="getArtifactCoord()">Back to settings</a>
+    <button onclick="getArtifactCoord()">aaaaa</button>
 </body>
 
 </html>
