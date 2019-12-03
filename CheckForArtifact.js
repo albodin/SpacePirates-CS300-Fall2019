@@ -80,37 +80,6 @@ function planet(artifact) {
     }
 }
 
-function spaceStationOLD() {
-    let cost = 10
-    let playing = confirm(`Play a game of chance with a Casinian? (10 Credits)`)
-    let pot = cost
-    let win = false
-    credits -= cost
-    while (playing) {
-        pot *= 2
-        if (Math.random() > 0.5) {
-            playing = confirm(`You won! Walk away with ${pot} ` +
-                '(Cancel) or keep it rolling (OK)?' +
-                `\n[Credits remaining: ${credits}]`)
-            win = true
-        } else {
-            playing = confirm(`Bust! Pay ${pot} to double down?` +
-                `\n[Credits remaining: ${credits}]`)
-            win = false
-            if (credits > pot)
-                credits -= pot
-            else {
-                playing = false
-                alert("You don't have enough credits")
-            }
-        }
-        document.getElementById("credits").value = credits;
-    }
-    if (win) 
-        credits += pot
-    document.getElementById("credits").value = credits;
-}
-
 function spaceStation() {
     let cost = 10
     let pot = cost
