@@ -206,7 +206,6 @@ function miniMart(c, s) {
 function makeModalMenu(title, options, exit) {
     // default value
     options = options || {}
-    console.log(exit)
     if (exit === undefined) exit = true
     // grey backdrop
     let modal = document.createElement("div")
