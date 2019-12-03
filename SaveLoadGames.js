@@ -49,6 +49,7 @@ function saveGame(saveName) {
     toStore.push(isWormholeActive);
     toStore.push(player);
     toStore.push(map);
+    toStore.push(displayCelestial);
 
     var saved = false;
     while (!saved) {
@@ -121,7 +122,7 @@ function loadSave(saveName) {
         return;
     var toLoad = JSON.parse(localStorage.getItem(saveName));
     //Don't try and load if save doesn't exist or if it's the wrong size
-    if (toLoad === null || toLoad.length != 7)
+    if (toLoad === null || toLoad.length != 8)
         return;
     
     //set the globals to what we loaded in
@@ -134,6 +135,7 @@ function loadSave(saveName) {
     isWormholeActive = toLoad[4];
     player = toLoad[5];
     map = toLoad[6];
+    displayCelestial = toLoad[7];
 
     //Update the map and focus on player
     celestialMap.update();
