@@ -8,9 +8,12 @@ const CA__SPACE_STATION = 'Space Station'
 const CA__ABANDONED_FREIGHTER = 'Abandoned Freighter'
 const CA__MINI_MART = 'Mini Mart'
 const CA__KOKA_KOLA = 'Koka Kola'
+const CA__ENERGY_STATION = 'Musk-Tesla Energy Station'
 
 var supplies = 0;
 var energy = 0;
+// TODO add to stuff
+var credits = 0;
 var isRegularPlay = true;
 var hasEnhancedSensors = false;
 var isWormholeActive = true; 
@@ -21,6 +24,8 @@ var displayCelestial = false;
 //start variables, what the game resets too upon losing
 var startEnergy = 1000;
 var startSupplies = 100;
+// TODO
+var startCredits = 80;
 var startx = 12;
 var starty = 12;
 var energyCost = 10;//how much an energy one movement costs
@@ -30,6 +35,7 @@ var map = {
         y: 126
     },
 }
+var previousPlayerPosition = {x:0,y:0}
 
 // suggestion - Matt
 let player = {

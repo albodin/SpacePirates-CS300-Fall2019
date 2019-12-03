@@ -32,6 +32,10 @@ function movement(angle, distance) {
        use: moves the spaceshipt based on input index.html
        */
     //console.log(distance)
+    previousPlayerPosition = {
+        x: player.position.x,
+        y: player.position.y,
+    }
     distance = distance ? distance : 1;
     for (var i = 0; i < distance; ++i) {
         //  Down
@@ -87,16 +91,11 @@ function movement(angle, distance) {
             }
         }
 
-
-        //update the Energy after a player makes a move
-        decrementEnergy(energyCost);  
-        //Set the points to visible with a radius of 1 around the player
-        setVisible(1)
-
         //check to see if you ran into an artifact, if you did, the movement loop will stop and
         //this statement will be true.
         if(checkForArtifact())
         {
+            player.position = previousPlayerPosition
             //you won the game, do not decrement the supplies
             if(gameOver){
                 gameOver = false;
@@ -111,6 +110,12 @@ function movement(angle, distance) {
                 return;
             }
         }
+
+
+        //update the Energy after a player makes a move
+        decrementEnergy(energyCost);  
+        //Set the points to visible with a radius of 1 around the player
+        setVisible(1)
 
         // console.log(energy)
         // console.log(player.position)
