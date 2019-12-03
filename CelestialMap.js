@@ -272,7 +272,18 @@ const draw = {
         ctx.fill()
     },
     asteroid(position) { this.sprite('asteroid', position) },
-    planet(position) { this.sprite('planet', position) },
+    planet(position, name) {
+        if (name == null)
+            return this.sprite('planet', position)
+        return this.sprite(name.toLowerCase(), position)
+        /*
+        switch (name) {
+            case 'Ryzen': return this.sprite('ryzen', position)
+            case 'Celeron': return this.sprite('celeron', position)
+            case 'Xeon': return this.sprite('celeron', position)
+        }
+        */
+    },
     // todo celeron/xenon/ryzen
     spaceStation(position) { this.sprite('spaceStation', position) },
     kocaKola(position) { this.sprite('kokaKola', position) },
@@ -298,7 +309,7 @@ const draw = {
                         // TODO the rest
                         case CA__ASTEROID: this.asteroid(pos); break
                         // case CA__PLANET: this.planet(pos, tile.artifact.color); break
-                        case CA__PLANET: this.planet(pos); break
+                        case CA__PLANET: this.planet(pos, tile.artifact.name); break
                         case CA__SPACE_STATION: this.spaceStation(pos); break
                         case CA__ABANDONED_FREIGHTER: this.freighter(pos); break
                         case CA__MINI_MART: this.miniMart(pos); break;

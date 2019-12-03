@@ -15,6 +15,7 @@ var isRegularPlay = true;
 var hasEnhancedSensors = false;
 var isWormholeActive = true; 
 var gameOver = false;
+// toggles the celestial gazetteer
 var displayCelestial = false;
 
 //start variables, what the game resets too upon losing
@@ -48,6 +49,3 @@ map.data = Array(map.bounds.x)
             artifact: null
         }
     }))
-
-// Places artifacts on the map
-placeArtifacts()

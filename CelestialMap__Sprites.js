@@ -1,3 +1,4 @@
+// Sprites are original by Matt O'Tousa and were created on www.piskelapp.com.
 const SPRITES = {
     player: {
         img: null,
@@ -26,16 +27,27 @@ const SPRITES = {
     freighter: {
         img: null,
         data_uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAiElEQVQ4je2QMQrAMAwD+5r2A108px9INo16Qfr/RZ0ckpAEunWowBgMOsvets8qhEuzWhoBiKQACEAxkRTJNQCA7px159xAHGRmY/N+nKoLQNNDuEofbvXYvr1OQVIxJsWYmjOm//CoZqb9OEsfmacn9SAzK+Z6tgQ4pDf1syWgVr/5NeDXXA9zwaPrn8CPiQAAAABJRU5ErkJggg==",
+    },
+    ryzen: {
+        img: null,
+        data_uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA10lEQVQ4jY2SsQ2EMAxFWSBrRKKgoqSkSGPRpKROQ5fmJohujluLaf4VyGCMA0SyBEn8/P3jpjHWMK7IJSGXhGFc0fUzun6GdfeSKJO/v8970LS0mJZ2T+D/YVz3b0/OhshLsjqHhHpyoBhAMeAE4GDQXZxU6L6t0OpySaAYNohV9Y0aTw6e3BkgW+F97Qefdf28+WAZpavrMwZ4cgdAK6lJlx5QDGjkoEi5cl8azee7ifoZZf/W8+aSDgP1HNTM1C3xRJqj/AS4VNcQa5QZcJtcU3MZXbX+CqW2dTgXbCcAAAAASUVORK5CYII="
+    },
+    celeron: {
+        img: null,
+        data_uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAnUlEQVQ4jZVTyQ0AIQi0Bq3A+DexAhObsB2rsQELZD/LBhHRNeEhyjDDYYxwmg/QY4IeEzQfoFoH1TqQ/oqBIxcYuUwgRyCalQZRQ4AFpPnwZZVYoG8LItGmLFQpnLomQZJjtGzcrwJwGVw/vU8Au5ZhQY/d4NXG4B1lbsvU3XZg6oRWeeltmQMesNOsjrRUbQ3sah9+LRMHOi7Qex6czHkqgUAGowAAAABJRU5ErkJggg=="
+    },
+    xeon: {
+        img: null,
+        data_uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAn0lEQVQ4jZVTWxEAIQg0igHMYgMbmEJD2MAUlrCDPbif4wYR0XOGD1GWXR7GCMelAr428LWBSwVsiGBDBOmvGJj7gNzHBHIEollpEDUEWEBcKl9WiQX6tiASbcpClcKpaxIkOUbLxv0qAJfB9dP7BLBrGRb02A1ebQzeUea2TN1tB6ZOaJWX3pY54AE7zepIS9XWwK724dcycaDjAr3nAYZn8ccW1VIoAAAAAElFTkSuQmCC"
     }
 }
 
-// Loading data URI's into images is an asynchronous operation
+// Loading data URI's into images is an asynchronous operation, so they must be
+// added to our sprite object through a callback function.
 for (let sprite in SPRITES) {
     sprite = SPRITES[sprite]
     let img = new Image()
     img.setAttribute("src", sprite.data_uri)
-    img.addEventListener('load', () => {
-        sprite.img = img
-    })
+    img.addEventListener('load', () => sprite.img = img)
 }
 
