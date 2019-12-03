@@ -41,7 +41,15 @@ function getArtifactCoord() {
 
 }
 
-
+//password 
+function validatePass() {
+    if (document.getElementById('password').value == 'hi') {
+        return true;
+    } else {
+        alert('wrong password!!');
+        return false;
+    }
+}
 
 //formats string into object and returns it
 function strToObj(str) {
