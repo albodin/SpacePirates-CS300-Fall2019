@@ -56,7 +56,7 @@ function planet(artifact) {
         case 'Celeron':
             makeModalMenu('Celeron', {
                 'Visit Musk-Tesla Energy Station': () => energyStation(),
-                'Visit Mini-Mart': () => energyStation(),
+                'Visit Mini-Mart': () => miniMart(),
                 'Visit Repair Depot': () => {
                     makeModalMenu('No repairs needed')
                     return true
@@ -66,13 +66,13 @@ function planet(artifact) {
         case 'Ryzen':
             makeModalMenu('Ryzen', {
                 'Visit Murk-Tusla Energy Station': () => energyStation(20),
-                'Visit Shady-Mart': () => energyStation(20),
+                'Visit Shady-Mart': () => miniMart(20),
             })
             return
         case 'Xeon':
             makeModalMenu('Xeon', {
                 'Visit Musk-Tesla Energy Station': () => energyStation(),
-                'Visit Mini-Mart': () => energyStation(),
+                'Visit Mini-Mart': () => miniMart(),
             })
             return;
         default:
