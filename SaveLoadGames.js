@@ -80,6 +80,9 @@ function saveGame(saveName) {
             }
         }
     }
+
+    //Reload Saves after a save
+    showLoadSelection();
 }
 
 //Creates a new option for our loading selection with
@@ -89,13 +92,14 @@ function addLoadSelectOption(element, value, innerHTML) {
     var newOption = document.createElement('option');
     newOption.value = value;
     newOption.innerHTML = innerHTML;
-    newOption.onclick = function() { loadSave(value); };
+    //newOption.onClick = function() { loadSave(value); };
+    if (value != "Default")
+        newOption.style.color = "black";
     element.appendChild(newOption);
 }
 
 function showLoadSelection() {
     //Find all required elements
-    //var selectClass = document.getElementById("custom-select");
     var selectElement = document.getElementById("ourSelect");
 
     //Remove selection options so we can add new ones

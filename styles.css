@@ -180,7 +180,7 @@ li a:hover {
     cursor: text;
 }
 
-.custom-select select{
+.custom-select select {
     font-family: 'Space Mono', monospace;
     padding-left: 16px;
     padding-right: 16px;
