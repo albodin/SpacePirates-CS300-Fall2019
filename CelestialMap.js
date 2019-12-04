@@ -276,13 +276,6 @@ const draw = {
         if (name == null)
             return this.sprite('planet', position)
         return this.sprite(name.toLowerCase(), position)
-        /*
-        switch (name) {
-            case 'Ryzen': return this.sprite('ryzen', position)
-            case 'Celeron': return this.sprite('celeron', position)
-            case 'Xeon': return this.sprite('celeron', position)
-        }
-        */
     },
     // todo celeron/xenon/ryzen
     spaceStation(position) { this.sprite('spaceStation', position) },
@@ -332,6 +325,7 @@ let celestialMap = {
             draw.map()
             // draw.player(player.position)
             draw.sprite('player', player.position)
+            draw.sprite('badMax', badMax.position)
             // writeInfo()
 
             // Debug by printing to DOM in real time

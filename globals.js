@@ -49,6 +49,10 @@ let player = {
     position: {x: 12, y: 12}
 }
 
+let badMax = {
+    position: {x: 13, y: 13}
+}
+
 //Read settings from Local Storage
 readSettingsFromLocalStorage()
 

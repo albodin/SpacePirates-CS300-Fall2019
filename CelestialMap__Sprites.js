@@ -43,6 +43,10 @@ const SPRITES = {
     energyStation: {
         img: null,
         data_uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhUlEQVQ4jdWSvQ0AIQiF2YUFTews6F3AxriBazAXV1wwnPH0/pojITEQvvdQAb4OZpY+S65SchUKSZbD3sVpTiHexYOqnimk5sK7OAb0lplZCFEIsdm36wwB2jwDaA4Btmghdlj7y8tUR1Z1OTBb6THArvBDgEKGT3YH8FgdYP8PrwBXYgOk2PRlBpik5AAAAABJRU5ErkJggg=="
+    },
+    badMax: {
+        img: null,
+        data_uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAZklEQVQ4jWNgwAN8FRT++yoo/MenhqBmXwWF/yZycqQZgqwZZgBJhsA0oGOiDUhMTPyPjL3t7f9729uTZgADAwMKJtmAURdQ4AJfBQW4BlgigvEJpgV0DdgMwGsIeronxKe+AeQAAHoxkdLYVqzhAAAAAElFTkSuQmCC"
     }
 }
 
