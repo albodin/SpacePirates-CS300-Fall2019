@@ -2,18 +2,20 @@
 function checkEnergy() {
    if(energy <=0)
    {
-      //TODO Make sure that is Regular play works correctly
       if(isRegularPlay)
       {
-         alert ("You are out of energy. Game over");
+         //alert ("You are out of energy. Game over");
          restart();
+         makeModalMenu('You are out of energy. Game over!', {
+            'Restart': () => {
+            }
+         },false)
+         //restart();
       }
-
-      //else //not regular game mode
-          //alert("You ran out of energy. However, you're in test mode, so you won't never die!");
-
+      return false;
    }
-   // console.log(isRegularPlay)
+   else
+      return true;
 }
 
 //Reduces energy by 1
