@@ -95,7 +95,6 @@ function movement(angle, distance) {
         //this statement will be true.
         if(checkForArtifact())
         {
-            player.position = previousPlayerPosition
             //you won the game, do not decrement the supplies
             if(gameOver){
                 gameOver = false;
@@ -104,6 +103,7 @@ function movement(angle, distance) {
 
             //you hit an artifact that wasn't koka-kola, stop moving and decrement supplies.
             else{
+                player.position = previousPlayerPosition
                 decrementSupplies(2);
                 // console.log(energy)
                 // console.log(player.position)

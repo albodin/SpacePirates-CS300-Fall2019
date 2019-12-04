@@ -9,7 +9,7 @@ function restart() {
     document.getElementById("credits").value = startCredits;
     player.position.x = startx;
     document.getElementById("xVal").value = startx;
-    player.position.y = startx;
+    player.position.y = starty;
     document.getElementById("yVal").value = starty;
     energyCost = 10;
     //reset visibility
