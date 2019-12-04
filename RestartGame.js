@@ -5,6 +5,8 @@ function restart() {
     document.getElementById("energy").value = startEnergy;
     supplies = startSupplies;
     document.getElementById("supplies").value = startSupplies;
+    credits = startCredits;
+    document.getElementById("credits").value = startCredits;
     player.position.x = startx;
     document.getElementById("xVal").value = startx;
     player.position.y = startx;

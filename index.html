@@ -92,6 +92,7 @@
 </head>
 
 <body onload="showLoadSelection()">
+  <div id="modal-parent"></div>
   <ul>
     <li><a class="active" href="#home">Home</a></li>
 
@@ -126,7 +127,7 @@
                   <th>
                     <input
                       type="button"
-                      value="180&#176;"
+                      value="270&#176;"
                       onclick="moveSpacecraft(3,distance)" />
                   </th>
                   <th></th>
@@ -136,7 +137,7 @@
                   <th>
                     <input
                       type="button"
-                      value="270&#176;"
+                      value="180&#176;"
                       onclick="moveSpacecraft(4,distance)" />
                   </th>
                   <!-- sensors -->
@@ -183,6 +184,10 @@
             <div class="status-field">
                 &nbsp;Supplies
                 <br/><input type="number" id="supplies" name="supplies" size="4" />
+            </div>
+            <div class="status-field">
+                &nbsp;Credits
+                <br/><input type="number" id="credits" name="credits" size="4" />
             </div>
         </div>
     </form>

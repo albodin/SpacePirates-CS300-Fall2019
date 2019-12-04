@@ -286,6 +286,7 @@ const draw = {
     },
     // todo celeron/xenon/ryzen
     spaceStation(position) { this.sprite('spaceStation', position) },
+    energyStation(position) { this.sprite('energyStation', position) },
     kocaKola(position) { this.sprite('kokaKola', position) },
     freighter(position) { this.sprite('freighter', position) },
     miniMart(position) { this.sprite('miniMart', position) },
@@ -311,6 +312,7 @@ const draw = {
                         // case CA__PLANET: this.planet(pos, tile.artifact.color); break
                         case CA__PLANET: this.planet(pos, tile.artifact.name); break
                         case CA__SPACE_STATION: this.spaceStation(pos); break
+                        case CA__ENERGY_STATION: this.energyStation(pos); break
                         case CA__ABANDONED_FREIGHTER: this.freighter(pos); break
                         case CA__MINI_MART: this.miniMart(pos); break;
                         case CA__KOKA_KOLA: this.kocaKola(pos); break;
@@ -346,6 +348,7 @@ mouse.init()
 camera.init()
 // call this on move event
 celestialMap.update()
+// celestialMap.onPlayerMovement()
 
 // Resizes the canvas and sets anything that needs to be updated to reflect
 // the new canvas size.

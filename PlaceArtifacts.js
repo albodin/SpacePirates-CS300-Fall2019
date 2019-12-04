@@ -1,5 +1,4 @@
 function placeArtifacts() {
-    console.error('placing artifacts')
     // fills map with some artifacts
     map.data[0][0].artifact = { type: CA__ASTEROID }
     map.data[3][3].artifact = { type: CA__PLANET }
@@ -7,6 +6,7 @@ function placeArtifacts() {
     map.data[2][2].artifact = { type: CA__SPACE_STATION }
     map.data[5][7].artifact = { type: CA__KOKA_KOLA }
     map.data[8][8].artifact = { type: CA__MINI_MART }
+    map.data[14][14].artifact = { type: CA__ENERGY_STATION }
     map.data[16][16] = {
         visible: true,
         artifact: {
@@ -42,6 +42,7 @@ function gazetteer() {
         for (y in map.data[x])
             if (map.data[x][y].artifact) {
                 let {type, name} = map.data[x][y].artifact
+                map.data[x][y].visible = true
                 artifacts.push(`${type} \'${name ? name : 'unnamed'}\' at ${x}, ${y}`)
             }
     for (artifact in artifacts) 

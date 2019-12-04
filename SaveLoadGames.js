@@ -50,6 +50,7 @@ function saveGame(saveName) {
     toStore.push(player);
     toStore.push(map);
     toStore.push(displayCelestial);
+    toStore.push(credits);
 
     var saved = false;
     while (!saved) {
@@ -121,12 +122,13 @@ function showLoadSelection() {
 }
 
 function loadSave(saveName) {
+    console.log("LOADING SAVE")
     //if default option was pressed, return
     if (saveName === "Default")
         return;
     var toLoad = JSON.parse(localStorage.getItem(saveName));
     //Don't try and load if save doesn't exist or if it's the wrong size
-    if (toLoad === null || toLoad.length != 8)
+    if (toLoad === null || toLoad.length != 9)
         return;
     
     //set the globals to what we loaded in
@@ -140,6 +142,8 @@ function loadSave(saveName) {
     player = toLoad[5];
     map = toLoad[6];
     displayCelestial = toLoad[7];
+    credits = toLoad[8];
+    document.getElementById("credits").value = credits;
 
     //Update the map and focus on player
     celestialMap.update();
