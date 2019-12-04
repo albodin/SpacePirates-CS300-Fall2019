@@ -32,12 +32,12 @@ function movement(angle, distance) {
        use: moves the spaceshipt based on input index.html
        */
     //console.log(distance)
-    previousPlayerPosition = {
-        x: player.position.x,
-        y: player.position.y,
-    }
     distance = distance ? distance : 1;
     for (var i = 0; i < distance; ++i) {
+        previousPlayerPosition = {
+            x: player.position.x,
+            y: player.position.y,
+        }
         //  Down
         if (angle === 1) {
             if (player.position.y + 1 >= map.bounds.y) {
