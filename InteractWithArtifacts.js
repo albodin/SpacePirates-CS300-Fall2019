@@ -59,13 +59,13 @@ function spaceStation() {
         pot *= 2
         if (Math.random() > 0.5) {
             makeModalMenu(`Win! Pot: ${pot} Credits`, {
-                'Keep it rolling!': () => {
-                    gameTurn()
-                    return false
-                },
                 [`Walk away with ${pot} credits`]: () => {
                     credits += pot
                     document.getElementById("credits").value = credits;
+                    return false
+                },
+                'Double or nothing!': () => {
+                    gameTurn()
                     return false
                 },
             },
