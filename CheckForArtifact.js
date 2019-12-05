@@ -8,6 +8,11 @@ function checkForArtifact(){
 
     //there is a celestial object in our space
     if (tile && tile.type) {
+        decrementSupplies(2);
+        if(!checkSupplies()) {
+            gameOver = true;
+            return true;
+        }
         switch (tile.type) {
             case CA__ASTEROID:
                 makeModalMenu('Collided with an asteroid!')

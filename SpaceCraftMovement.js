@@ -91,6 +91,10 @@ function movement(angle, distance) {
             }
         }
 
+        //update the Energy after a player makes a move
+        decrementEnergy(10);
+        if(!checkEnergy())
+            return;
         //check to see if you ran into an artifact, if you did, the movement loop will stop and
         //this statement will be true.
         if(checkForArtifact())
@@ -104,22 +108,16 @@ function movement(angle, distance) {
             //you hit an artifact that wasn't koka-kola, stop moving and decrement supplies.
             else{
                 player.position = previousPlayerPosition
-                decrementSupplies(2);
-                checkSupplies();
                 return;
             }
         }
 
-
-        //update the Energy after a player makes a move
-        decrementEnergy(energyCost);
-        if(!checkEnergy())
-            return;
         //Set the points to visible with a radius of 1 around the player
         setVisible(1)
     }
     decrementSupplies(2);
-    checkSupplies();
+    if(!checkSupplies())
+        return;
 };
 
 
