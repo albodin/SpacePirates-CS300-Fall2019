@@ -17,6 +17,9 @@ function restart() {
             map.data[i][j] = {visible: false, artifact: null}
         }
     }
+    //reset bad max position
+    badMax.position.x = badMaxStartx;
+    badMax.position.y = badMaxStarty;
     //places artifacts
     placeArtifacts()
     celestialMap.onPlayerMovement(player)

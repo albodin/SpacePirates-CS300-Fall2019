@@ -6,6 +6,7 @@ function moveSpacecraft(angle, distance) {
     currentPosition()
     //checkEnergy();
     //checkSupplies();
+    moveBadMax();//now let bad max move
     celestialMap.onPlayerMovement(player)
 
 }
