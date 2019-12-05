@@ -4,13 +4,11 @@ function checkEnergy() {
    {
       if(isRegularPlay)
       {
-         //alert ("You are out of energy. Game over");
          restart();
          makeModalMenu('You are out of energy. Game over!', {
             'Restart': () => {
             }
          },false)
-         //restart();
       }
       return false;
    }

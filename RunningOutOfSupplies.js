@@ -1,12 +1,15 @@
 function checkSupplies() {
    if (supplies <= 0) {
       if (isRegularPlay) {
-         alert("You ran out of supplies. Game over");
          restart();
+         makeModalMenu('You are out of supplies. Game over!', {
+            'Restart': () => {
+            }
+         },false)
+         return false;
       }
-      //else
-         //alert("You ran out of supplies");
-   }    
+   }
+   return true;
 }
 
 function decrementSupplies(amount) {

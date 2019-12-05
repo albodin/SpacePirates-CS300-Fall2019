@@ -1,6 +1,5 @@
 //resets all the values to their start values
 function restart() {
-    //TODO test restart function
     energy = startEnergy;
     document.getElementById("energy").value = startEnergy;
     supplies = startSupplies;
