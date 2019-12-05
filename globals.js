@@ -52,6 +52,8 @@ let player = {
 let badMax = {
     position: {x: 13, y: 13}
 }
+var badMaxStartx = 13;
+var badMaxStarty = 13;
 
 //Read settings from Local Storage
 readSettingsFromLocalStorage()
