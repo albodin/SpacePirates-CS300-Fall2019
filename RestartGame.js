@@ -23,4 +23,5 @@ function restart() {
     //places artifacts
     placeArtifacts()
     celestialMap.onPlayerMovement(player)
+    setVisible(1)
 }

@@ -18,8 +18,8 @@ var coordinates = {}
 
 function getArtifactCoord() {
     asteroidCoord = document.getElementById("asteroid").value
-    console.log("hello")
-    console.log(asteroidCoord)
+    // console.log("hello")
+    // console.log(asteroidCoord)
     coordinates["asteroid"] = strToObj(asteroidCoord)
 
     planetCoord = document.getElementById("planet").value
@@ -36,7 +36,7 @@ function getArtifactCoord() {
 
     localStorage.setItem('artifactCoords', JSON.stringify(coordinates));
     //customArtifactPlacement()
-    console.log(coordinates)
+    // console.log(coordinates)
 
 
 }
@@ -71,13 +71,13 @@ function customArtifactPlacement() {
     try {
         if (getArtifactCoords["asteroid"]) {
             getArtifactCoords["asteroid"].forEach(function (obj) {
-                console.log(obj.x, obj.y)
+                // console.log(obj.x, obj.y)
                 map.data[obj.x][obj.y].artifact = { type: CA__ASTEROID };
             })
         }
     } catch (error) {
-        console.log(error)
-        console.log("error in asteroid")
+        // console.log(error)
+        // console.log("error in asteroid")
     }
 
     try {
@@ -87,7 +87,7 @@ function customArtifactPlacement() {
             })
         }
     } catch (error) {
-        console.log("error in planet")
+        // console.log("error in planet")
     }
     try {
         if (getArtifactCoords["station"]) {
@@ -96,7 +96,7 @@ function customArtifactPlacement() {
             })
         }
     } catch (error) {
-        console.log("error in station")
+        // console.log("error in station")
 
     }
 
@@ -107,7 +107,7 @@ function customArtifactPlacement() {
             })
         }
     } catch (error) {
-        console.log("error in kola")
+        // console.log("error in kola")
 
     }
     try {
@@ -117,7 +117,7 @@ function customArtifactPlacement() {
             })
         }
     } catch (error) {
-        console.log("error in mart")
+        // console.log("error in mart")
 
     }
 
