@@ -171,7 +171,8 @@ let mouse = {
     // Implements scrollwheel behavior on Celestial Map
     onWheel(e) {
         e.preventDefault()
-        camera.zoomBy(e.deltaY)
+        let delta = e.deltaY > 0 ? Math.min(e.deltaY, 3) : Math.max(e.deltaY, -3)
+        camera.zoomBy(delta)
     },
     // Starts dragging. TODO click functionality?
     onDown(e) {
